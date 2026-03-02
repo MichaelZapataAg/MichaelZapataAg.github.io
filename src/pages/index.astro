@@ -23,7 +23,7 @@ import "../styles/global.css";
         class="min-h-screen w-full flex flex-col justify-center items-start px-6 sm:px-12 md:px-20 lg:px-32 pt-24"
       >
         <div
-          class="brutal-box bg-neo-green px-4 py-2 mt-0 mb-6 inline-block transform -rotate-2 brutal-shadow init-animate"
+          class="brutal-box bg-neo-green px-4 py-2 mt-0 mb-1 sm:mb-2 inline-block transform -rotate-2 brutal-shadow init-animate"
         >
           <span
             class="font-display font-black text-xl md:text-2xl uppercase tracking-tighter"
@@ -31,17 +31,7 @@ import "../styles/global.css";
           >
         </div>
 
-        <div class="flex flex-col items-start gap-0">
-          <div
-            class="relative z-10 group cursor-crosshair portfolio-badge init-animate inline-block translate-y-1 md:translate-y-4"
-          >
-            <span
-              class="inline-block font-display font-black text-[10px] sm:text-xs md:text-sm tracking-[0.2em] md:tracking-[0.3em] uppercase border-4 border-black px-3 py-1 md:px-4 md:py-2 bg-paper hover:bg-black hover:text-white transition-colors duration-300"
-            >
-              [ PORTAFOLIO ]
-            </span>
-          </div>
-
+        <div class="flex flex-col items-start gap-0 relative">
           <h1
             class="text-[14vw] sm:text-[16vw] leading-[0.85] font-black text-outline uppercase relative title-animate inline-block group cursor-crosshair interactive-name m-0 p-0"
           >
@@ -51,6 +41,16 @@ import "../styles/global.css";
               data-text="Zapata">Zapata</span
             >
           </h1>
+
+          <div
+            class="relative z-10 group cursor-crosshair portfolio-badge init-animate inline-block self-end -mt-2 sm:-mt-4 md:-mt-6 mr-2 sm:mr-8 md:mr-12 opacity-0"
+          >
+            <span
+              class="inline-block font-display font-black text-[10px] sm:text-xs md:text-sm tracking-[0.2em] md:tracking-[0.3em] uppercase border-4 border-black px-3 py-1 md:px-4 md:py-2 bg-paper hover:bg-black hover:text-white transition-colors duration-300"
+            >
+              [ PORTAFOLIO ]
+            </span>
+          </div>
         </div>
 
         <div
@@ -232,12 +232,15 @@ import "../styles/global.css";
         id="contacto"
         class="pt-20 pb-10 border-t-8 border-black text-center relative z-20 bg-paper"
       >
-        <h2
-          class="text-[9vw] font-black hover:text-neo-blue transition-colors cursor-pointer text-outline hover:text-solid leading-[0.8] mb-16 sound-hover w-fit mx-auto"
-        >
-          <a href="mailto:michael.zapata.ag@gmail.com" class="block">HABLEMOS</a
+        <div class="w-full flex justify-center mb-16">
+          <h2
+            class="text-[9vw] font-black hover:text-neo-blue transition-colors cursor-pointer text-outline hover:text-solid leading-[0.8] sound-hover"
           >
-        </h2>
+            <a href="mailto:michael.zapata.ag@gmail.com" class="block"
+              >HABLEMOS</a
+            >
+          </h2>
+        </div>
 
         <div class="flex flex-wrap justify-center gap-6 md:gap-12 mb-20 px-4">
           <a
@@ -394,7 +397,7 @@ import "../styles/global.css";
         0.1,
         100,
       );
-      camera.position.z = 4;
+      camera.position.z = 6;
       scene.add(camera);
 
       // Dynamic, twisted geometry for "modeling" feel
