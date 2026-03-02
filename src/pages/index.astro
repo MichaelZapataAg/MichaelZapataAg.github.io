@@ -2,17 +2,565 @@
 import "../styles/global.css";
 ---
 
-<html lang="en">
+<!doctype html>
+<html lang="es">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MICHAEL ZAPATA | CREATIVE DEVELOPER & 3D ARTIST</title>
   </head>
-  <body>
-    <div class="bg-red-500 w-full h-screen flex justify-center items-center">
-      <h1 class="text-9xl text-white font-black">Portfolio WIP</h1>
+  <body class="bg-paper text-black">
+    <!-- 3D Canvas Background Removed, see Hero -->
+
+    <div class="noise-overlay"></div>
+
+    <div
+      class="relative z-10 wrapper w-full min-h-screen overflow-hidden flex flex-col gap-32"
+    >
+      <!-- Hero Header -->
+      <header
+        class="min-h-screen w-full flex flex-col justify-center items-start px-6 sm:px-12 md:px-20 lg:px-32 pt-24"
+      >
+        <div
+          class="brutal-box bg-neo-green px-4 py-2 mt-0 mb-6 inline-block transform -rotate-2 brutal-shadow init-animate"
+        >
+          <span
+            class="font-display font-black text-xl md:text-2xl uppercase tracking-tighter"
+            >HOLA, SOY</span
+          >
+        </div>
+
+        <div class="flex flex-col items-start gap-0">
+          <div
+            class="relative z-10 group cursor-crosshair portfolio-badge init-animate inline-block translate-y-1 md:translate-y-4"
+          >
+            <span
+              class="inline-block font-display font-black text-[10px] sm:text-xs md:text-sm tracking-[0.2em] md:tracking-[0.3em] uppercase border-4 border-black px-3 py-1 md:px-4 md:py-2 bg-paper hover:bg-black hover:text-white transition-colors duration-300"
+            >
+              [ PORTAFOLIO ]
+            </span>
+          </div>
+
+          <h1
+            class="text-[14vw] sm:text-[16vw] leading-[0.85] font-black text-outline uppercase relative title-animate inline-block group cursor-crosshair interactive-name m-0 p-0"
+          >
+            <span class="block hover-glitch" data-text="Michael">Michael</span>
+            <span
+              class="text-black -webkit-text-stroke-0 block hover-glitch"
+              data-text="Zapata">Zapata</span
+            >
+          </h1>
+        </div>
+
+        <div
+          class="mt-8 md:mt-12 relative w-full flex flex-col lg:flex-row justify-between items-center gap-8 lg:gap-12 desc-box"
+        >
+          <!-- 3D Canvas Box -->
+          <div
+            id="canvas-container"
+            class="w-full lg:w-1/2 xl:w-7/12 h-[350px] sm:h-[450px] lg:h-[500px] cursor-crosshair init-animate flex justify-center items-center"
+          >
+            <canvas id="webgl" class="w-full h-full outline-none block"
+            ></canvas>
+          </div>
+          <!-- Pink Text Box -->
+          <div
+            class="brutal-box bg-neo-pink text-white w-full sm:w-3/4 lg:w-1/2 xl:w-5/12 p-6 md:p-10 brutal-shadow rotate-1 transform-gpu init-animate delay-200 z-10"
+          >
+            <p
+              class="text-2xl sm:text-3xl md:text-5xl font-display font-black leading-tight uppercase"
+            >
+              Desarrollador Web <br /> & Animador 3D
+            </p>
+            <p
+              class="mt-6 text-lg sm:text-xl md:text-2xl font-body font-medium leading-relaxed"
+            >
+              No te aburro con líneas genéricas, dejo que mis visuales hablen
+              por mí. Código crudo, experiencias memorables y píxeles en tres
+              dimensiones disparados al navegador.
+            </p>
+            <a
+              href="#contacto"
+              class="inline-block bg-black text-white w-max mt-8 px-8 py-4 font-display font-black text-lg md:text-xl border-4 border-black hover:bg-neo-blue hover:text-white hover:border-black transition-colors sound-hover"
+              >ESTABLECER CONTACTO →</a
+            >
+          </div>
+        </div>
+      </header>
+
+      <!-- Marquee divider -->
+      <div
+        class="marquee-container -rotate-2 z-20 brutal-shadow relative w-full overflow-hidden"
+      >
+        <div class="marquee-content text-black">
+          DESARROLLO CREATIVO &nbsp; • &nbsp; ANIMACIÓN 3D &nbsp; • &nbsp;
+          INTERFACES BRUTALISTAS &nbsp; • &nbsp; DESARROLLO CREATIVO &nbsp; •
+          &nbsp; ANIMACIÓN 3D &nbsp; • &nbsp; INTERFACES BRUTALISTAS &nbsp; •
+          &nbsp;
+        </div>
+      </div>
+
+      <!-- Arsenal Section -->
+      <section
+        class="py-16 md:py-24 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-8 items-center border-t-8 border-black pt-20 px-6 sm:px-12 md:px-20 lg:px-32"
+      >
+        <div class="scroll-fade">
+          <h2
+            class="text-6xl md:text-8xl lg:text-9xl font-black mb-10 leading-none"
+          >
+            MI <br /> ARSENAL
+          </h2>
+          <div class="flex flex-wrap gap-4">
+            {
+              [
+                "THREE.JS",
+                "ASTRO",
+                "BLENDER",
+                "GSAP",
+                "TAILWIND",
+                "WEBGL",
+                "REACT",
+                "CÓDIGO CREATIVO",
+              ].map((skill) => (
+                <span class="px-6 py-3 border-4 border-black bg-white font-display font-black text-lg md:text-xl uppercase brutal-shadow hover:bg-neo-blue hover:text-white transition-colors cursor-crosshair sound-hover">
+                  {skill}
+                </span>
+              ))
+            }
+          </div>
+        </div>
+
+        <div
+          class="flex items-center justify-center lg:justify-end scroll-fade delay-100"
+        >
+          <div
+            class="bg-neo-orange p-8 md:p-12 border-4 border-black brutal-shadow max-w-xl rotate-1"
+          >
+            <h3 class="text-4xl md:text-5xl font-black mb-6">¿POR QUÉ YO?</h3>
+            <p
+              class="text-xl md:text-2xl font-body font-medium leading-relaxed"
+            >
+              Rompo las reglas para construir productos magnéticos. El
+              minimalismo extremo estandarizó la web; el brutalismo la resucita.
+              Me dedico a imaginar locuras inmersivas y codificarlas
+              directamente al navegador.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Playground Section -->
+      <section
+        class="py-20 md:py-32 px-6 sm:px-12 md:px-20 lg:px-32 border-t-8 border-black"
+      >
+        <h2
+          class="text-[12vw] sm:text-[10vw] md:text-8xl font-black mb-20 text-center text-outline leading-tight"
+        >
+          PROYECTOS
+        </h2>
+        <div
+          class="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-12 w-full mx-auto"
+        >
+          <!-- Card 1 (Dimensios) -->
+          <a
+            href="https://michaelzapataag-dimensios.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="block group relative cursor-crosshair scroll-fade"
+          >
+            <div
+              class="absolute inset-0 bg-neo-blue border-4 border-black translate-x-4 translate-y-4 transition-transform group-hover:translate-x-8 group-hover:translate-y-8"
+            >
+            </div>
+            <div
+              class="relative bg-white border-4 border-black p-8 h-80 flex flex-col justify-between transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2 overflow-hidden"
+            >
+              <div
+                class="absolute -right-16 -top-16 w-56 h-56 bg-neo-green rounded-full opacity-60 blur-xl group-hover:blur-3xl transition-all duration-500 group-hover:scale-150"
+              >
+              </div>
+              <div class="flex justify-between items-start z-10 relative">
+                <h3 class="text-4xl font-black">DIMENSIOS</h3>
+                <span class="text-4xl">↗</span>
+              </div>
+              <div class="z-10 relative mt-auto">
+                <span
+                  class="bg-black text-white px-3 py-1 text-sm font-bold uppercase mb-2 inline-block"
+                  >Three.js + React</span
+                >
+                <p class="font-body text-2xl font-bold">
+                  Experiencia 3D Interactiva
+                </p>
+              </div>
+            </div>
+          </a>
+          <!-- Card 2 (Smog) -->
+          <div
+            class="group relative cursor-crosshair scroll-fade delay-100 sound-hover"
+          >
+            <div
+              class="absolute inset-0 bg-neo-pink border-4 border-black translate-x-4 translate-y-4 transition-transform group-hover:translate-x-8 group-hover:translate-y-8"
+            >
+            </div>
+            <div
+              class="relative bg-white border-4 border-black p-8 h-80 flex flex-col justify-between transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2 overflow-hidden"
+            >
+              <div
+                class="absolute -left-16 -bottom-16 w-56 h-56 bg-neo-orange rounded-none rotate-45 opacity-60 blur-xl group-hover:blur-3xl transition-all duration-500 group-hover:scale-150"
+              >
+              </div>
+              <h3 class="text-4xl font-black z-10 relative leading-tight">
+                LA VENGANZA <br />DEL SMOG
+              </h3>
+              <div class="z-10 relative mt-auto">
+                <span
+                  class="bg-black text-white px-3 py-1 text-sm font-bold uppercase mb-2 inline-block"
+                  >Plataformero 2D / Pixel Art</span
+                >
+                <p class="font-body text-xl md:text-2xl font-bold">
+                  Próximamente...
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer
+        id="contacto"
+        class="pt-20 pb-10 border-t-8 border-black text-center relative z-20 bg-paper"
+      >
+        <h2
+          class="text-[9vw] font-black hover:text-neo-blue transition-colors cursor-pointer text-outline hover:text-solid leading-[0.8] mb-16 sound-hover w-fit mx-auto"
+        >
+          <a href="mailto:michael.zapata.ag@gmail.com" class="block">HABLEMOS</a
+          >
+        </h2>
+
+        <div class="flex flex-wrap justify-center gap-6 md:gap-12 mb-20 px-4">
+          <a
+            href="https://www.linkedin.com/in/michaelzapataag/"
+            target="_blank"
+            rel="noreferrer"
+            class="font-display font-black text-xl md:text-2xl uppercase border-b-8 border-transparent hover:border-black transition-all"
+            >LinkedIn</a
+          >
+          <a
+            href="https://github.com/MichaelZapataAg"
+            target="_blank"
+            rel="noreferrer"
+            class="font-display font-black text-xl md:text-2xl uppercase border-b-8 border-transparent hover:border-black transition-all"
+            >GitHub</a
+          >
+          <a
+            href="https://sketchfab.com/MichaelZapataAg"
+            target="_blank"
+            rel="noreferrer"
+            class="font-display font-black text-xl md:text-2xl uppercase border-b-8 border-transparent hover:border-black transition-all"
+            >Sketchfab</a
+          >
+        </div>
+
+        <p class="font-body font-bold text-xl uppercase tracking-wider">
+          © {new Date().getFullYear()} Michael Zapata - HECHO CON <span
+            class="bg-neo-green px-2 text-black border-2 border-black inline-block -rotate-3"
+            >ACTITUD</span
+          >
+        </p>
+      </footer>
     </div>
+
+    <script>
+      import * as THREE from "three";
+      import { gsap } from "gsap";
+      import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      /**============================================
+       * AUDIO FEEDBACK
+       *=============================================**/
+      const AudioContext =
+        window.AudioContext || (window as any).webkitAudioContext;
+      let audioCtx: AudioContext | null = null;
+
+      const playBoop = () => {
+        if (!audioCtx) audioCtx = new AudioContext(); // Init on first interaction
+        if (audioCtx.state === "suspended") audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        osc.type = "square";
+        osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(
+          40,
+          audioCtx.currentTime + 0.1,
+        );
+        gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(
+          0.001,
+          audioCtx.currentTime + 0.1,
+        );
+        osc.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.1);
+      };
+
+      document.querySelectorAll("a, .sound-hover").forEach((el) => {
+        el.addEventListener("mouseenter", playBoop);
+      });
+
+      /**============================================
+       * INTERACTIVE MAGNETIC PORTFOLIO TEXT
+       *=============================================**/
+      const badge = document.querySelector(".portfolio-badge");
+      if (badge) {
+        badge.addEventListener("mousemove", (e: any) => {
+          const rect = badge.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+          gsap.to(badge, {
+            x: x * 0.4,
+            y: y * 0.4,
+            duration: 0.3,
+            ease: "power2.out",
+          });
+        });
+        badge.addEventListener("mouseleave", () => {
+          gsap.to(badge, {
+            x: 0,
+            y: 0,
+            duration: 0.5,
+            ease: "elastic.out(1, 0.3)",
+          });
+        });
+      }
+
+      /**============================================
+       * INTERACTIVE GLITCH NAME HOVER
+       *=============================================**/
+      const nameHoverElements = document.querySelectorAll(
+        ".interactive-name .hover-glitch",
+      );
+      nameHoverElements.forEach((el) => {
+        el.addEventListener("mouseenter", () => {
+          gsap.to(el, {
+            x: () => (Math.random() - 0.5) * 20,
+            y: () => (Math.random() - 0.5) * 20,
+            skewX: () => (Math.random() - 0.5) * 10,
+            duration: 0.1,
+            repeat: 3,
+            yoyo: true,
+            onComplete: () => {
+              gsap.to(el, { x: 0, y: 0, skewX: 0, duration: 0.2 });
+            },
+          });
+
+          if (audioCtx && audioCtx.state === "running") {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = "sawtooth";
+            osc.frequency.setValueAtTime(50, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(
+              800,
+              audioCtx.currentTime + 0.1,
+            );
+            gain.gain.setValueAtTime(0.02, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(
+              0.001,
+              audioCtx.currentTime + 0.1,
+            );
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.1);
+          }
+        });
+      });
+
+      /**============================================
+       * 3D SCENE SETUP
+       *=============================================**/
+      const canvasContainer = document.querySelector("#canvas-container");
+      const canvas = document.querySelector("canvas#webgl");
+      const scene = new THREE.Scene();
+
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        (canvasContainer?.clientWidth || window.innerWidth) /
+          (canvasContainer?.clientHeight || window.innerHeight),
+        0.1,
+        100,
+      );
+      camera.position.z = 4;
+      scene.add(camera);
+
+      // Dynamic, twisted geometry for "modeling" feel
+      const geometry = new THREE.TorusKnotGeometry(1.2, 0.4, 150, 40);
+      // Wireframe looks highly brutalist/technical
+      const material = new THREE.MeshBasicMaterial({
+        color: 0x000000,
+        wireframe: true,
+        wireframeLinewidth: 2,
+        transparent: true,
+        opacity: 0.15,
+      });
+
+      // An optional second mesh for double depth
+      const materialSolid = new THREE.MeshStandardMaterial({
+        color: 0xccff00, // neo-green
+        roughness: 0.2,
+        metalness: 0.8,
+      });
+
+      // Add lighting for the solid mesh
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+      scene.add(ambientLight);
+      const dirLight = new THREE.DirectionalLight(0xff0055, 2); // pink light
+      dirLight.position.set(5, 5, 5);
+      scene.add(dirLight);
+      const blueLight = new THREE.DirectionalLight(0x0033ff, 2);
+      blueLight.position.set(-5, -5, 2);
+      scene.add(blueLight);
+
+      const mesh = new THREE.Mesh(geometry, materialSolid);
+      const meshWireframe = new THREE.Mesh(geometry, material);
+      meshWireframe.scale.set(1.01, 1.01, 1.01);
+
+      const group = new THREE.Group();
+      group.add(mesh, meshWireframe);
+      scene.add(group);
+
+      const renderer = new THREE.WebGLRenderer({
+        canvas: canvas,
+        alpha: true,
+        antialias: true,
+      });
+
+      const updateSize = () => {
+        if (!canvasContainer) return;
+        const width = canvasContainer.clientWidth;
+        const height = canvasContainer.clientHeight;
+        renderer.setSize(width, height);
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+      };
+
+      updateSize();
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      window.addEventListener("resize", updateSize);
+
+      const timer = new THREE.Timer();
+
+      const tick = () => {
+        timer.update();
+        const elapsedTime = timer.getElapsed();
+
+        // Idle rotation
+        group.rotation.y = elapsedTime * 0.15;
+        group.rotation.x = elapsedTime * 0.1;
+
+        // Floating effect
+        group.position.y += Math.sin(elapsedTime) * 0.002;
+
+        renderer.render(scene, camera);
+        window.requestAnimationFrame(tick);
+      };
+      tick();
+
+      // Mouse interactive rotation with GSAP matching
+      let mouse = { x: 0, y: 0 };
+      window.addEventListener("mousemove", (event) => {
+        if (!canvasContainer) return;
+
+        // Only react fully if window is close to the container, or we just map it globally still but gentler
+        mouse.x = event.clientX / window.innerWidth - 0.5;
+        mouse.y = event.clientY / window.innerHeight - 0.5;
+
+        gsap.to(group.rotation, {
+          x: group.rotation.x + mouse.y * 1.5,
+          y: group.rotation.y + mouse.x * 1.5,
+          duration: 2,
+          ease: "power2.out",
+        });
+      });
+
+      /**============================================
+       * GSAP UI ANIMATIONS
+       *=============================================**/
+      // Initial Load Animation
+      const tl = gsap.timeline();
+
+      tl.from(".title-animate", {
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        ease: "power4.out",
+        delay: 0.2,
+      })
+        .fromTo(
+          ".init-animate",
+          {
+            scale: 0.8,
+            rotation: -10,
+            opacity: 0,
+          },
+          {
+            scale: 1,
+            rotation: 0, // Reset to inline block natural rotation or keep existing base. For the rotated box we might need from() without rotation if it breaks it, let's use a clear fromTo to keep opacity stable.
+            opacity: 1,
+            clearProps: "scale,rotation",
+            duration: 0.8,
+            stagger: 0.2,
+            ease: "back.out(1.5)",
+          },
+          "-=0.5",
+        )
+        .from(
+          group.scale,
+          {
+            x: 0,
+            y: 0,
+            z: 0,
+            duration: 1.5,
+            ease: "elastic.out(1, 0.75)",
+          },
+          "-=1",
+        );
+
+      // Scroll Animations for sections
+      gsap.utils.toArray(".scroll-fade").forEach((el) => {
+        gsap.from(el as HTMLElement, {
+          scrollTrigger: {
+            trigger: el as HTMLElement,
+            start: "top 85%",
+            toggleActions: "play none none reverse",
+          },
+          y: 60,
+          opacity: 0,
+          duration: 0.8,
+          ease: "power3.out",
+        });
+      });
+
+      // Animate 3D object dynamically based on scroll
+      // Global spin and float
+      ScrollTrigger.create({
+        trigger: "body",
+        start: "top top",
+        end: "bottom bottom",
+        onUpdate: (self) => {
+          gsap.to(group.rotation, {
+            y: "+=" + self.getVelocity() / 1000,
+            z: "+=" + self.getVelocity() / 2000,
+            duration: 0.5,
+            ease: "power1.out",
+          });
+        },
+      });
+    </script>
   </body>
 </html>
