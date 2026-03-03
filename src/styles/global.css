@@ -65,7 +65,8 @@ h6 {
 }
 
 .marquee-content {
-  display: inline-block;
+  display: flex;
+  width: max-content;
   animation: marquee 15s linear infinite;
   font-family: var(--font-display);
   font-weight: 800;
