@@ -12,7 +12,7 @@ import aMediasImg from "../assets/images/AMediasPoster.jpeg";
 <html lang="es">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/mz-icon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/mz-icon.svg?v=2" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>MICHAEL ZAPATA | CREATIVE DEVELOPER & 3D ARTIST</title>
   </head>
@@ -86,7 +86,7 @@ import aMediasImg from "../assets/images/AMediasPoster.jpeg";
             </div>
 
             <p
-              class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-display font-black leading-tight uppercase relative z-10 pr-12 break-words hyphens-auto"
+              class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-display font-black leading-tight uppercase relative z-10 pr-20 md:pr-28 break-words hyphens-auto"
             >
               Ingeniero en Diseño de Entretenimiento Digital
             </p>
@@ -124,7 +124,7 @@ import aMediasImg from "../assets/images/AMediasPoster.jpeg";
       >
         <div class="w-full relative z-10 overflow-hidden lg:overflow-visible">
           <h2
-            class="text-[12vw] sm:text-6xl md:text-7xl font-black mb-8 leading-none max-w-full break-words"
+            class="text-[12vw] sm:text-5xl md:text-6xl font-black mb-8 leading-none max-w-full break-words"
           >
             MI <br /> ARSENAL
           </h2>
@@ -226,7 +226,7 @@ import aMediasImg from "../assets/images/AMediasPoster.jpeg";
 
               <!-- Mockup Image Slot -->
               <div
-                class="w-full md:w-1/2 lg:w-1/2 h-64 sm:h-80 md:h-auto border-4 border-black bg-white flex items-center justify-center relative z-10 overflow-hidden group"
+                class="w-full md:w-1/2 lg:w-1/2 aspect-video md:aspect-auto min-h-[200px] border-4 border-black bg-white flex items-center justify-center relative z-10 overflow-hidden group"
               >
                 <Image
                   src={dimensioImg}
@@ -270,8 +270,11 @@ import aMediasImg from "../assets/images/AMediasPoster.jpeg";
           </a>
 
           <!-- Card 2 (Smog) -->
-          <div
-            class="group relative cursor-crosshair sound-hover lg:row-span-2"
+          <a
+            href="https://youtu.be/BPYK-eoCLBw"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="block group relative cursor-crosshair sound-hover lg:row-span-2"
           >
             <div
               class="absolute inset-0 bg-neo-pink border-4 border-black translate-x-4 translate-y-4 transition-transform group-hover:translate-x-8 group-hover:translate-y-8"
@@ -287,7 +290,7 @@ import aMediasImg from "../assets/images/AMediasPoster.jpeg";
 
               <!-- Mockup Image Slot -->
               <div
-                class="w-full md:w-1/2 lg:w-full xl:w-1/2 h-64 sm:h-80 md:h-auto border-4 border-black bg-white flex items-center justify-center relative z-10 overflow-hidden group"
+                class="w-full md:w-1/2 lg:w-full xl:w-1/2 aspect-[4/3] md:aspect-auto min-h-[250px] border-4 border-black bg-white flex items-center justify-center relative z-10 overflow-hidden group"
               >
                 <Image
                   src={smogImg}
@@ -322,7 +325,7 @@ import aMediasImg from "../assets/images/AMediasPoster.jpeg";
                 </div>
               </div>
             </div>
-          </div>
+          </a>
 
           <!-- Card 3 (A Medias) -->
           <a
@@ -340,7 +343,7 @@ import aMediasImg from "../assets/images/AMediasPoster.jpeg";
             >
               <!-- Mockup Image Slot -->
               <div
-                class="w-full md:w-1/2 lg:w-full xl:w-1/2 h-64 sm:h-80 md:h-auto border-4 border-black bg-gray-200 flex items-center justify-center relative z-10 overflow-hidden group"
+                class="w-full md:w-1/2 lg:w-full xl:w-1/2 aspect-video md:aspect-auto min-h-[250px] border-4 border-black bg-gray-200 flex items-center justify-center relative z-10 overflow-hidden group"
               >
                 <Image
                   src={aMediasImg}
@@ -479,11 +482,27 @@ import aMediasImg from "../assets/images/AMediasPoster.jpeg";
           >
             <a
               href="mailto:michael.zapata.ag@gmail.com"
-              class="flex items-center justify-center gap-4 md:gap-8"
+              class="flex items-center justify-center gap-4 md:gap-8 hover:text-solid transition-colors"
             >
-              <span class="text-[5vw] text-solid group-hover:animate-bounce"
-                >✉️</span
+              <span
+                class="w-12 h-12 md:w-20 md:h-20 min-w-[3rem] min-h-[3rem] group-hover:animate-bounce flex-shrink-0"
               >
+                <svg
+                  stroke="currentColor"
+                  stroke-width="0"
+                  class="w-full h-full text-black fill-current"
+                  viewBox="0 0 24 24"
+                  ><path
+                    stroke="none"
+                    d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2zm-2 0-8 5-8-5zm0 12H4V8l8 5 8-5z"
+                  ></path><path
+                    fill="none"
+                    stroke="none"
+                    d="M1 3h22v18H1z"
+                    class="stroke-current shadow-[2px_2px_0px_#ccff00]"
+                  ></path></svg
+                >
+              </span>
               HABLEMOS
               <span
                 class="text-[5vw] text-solid transition-transform group-hover:translate-x-4 group-hover:-translate-y-4"
@@ -675,7 +694,7 @@ import aMediasImg from "../assets/images/AMediasPoster.jpeg";
 
       // An optional second mesh for double depth
       const materialSolid = new THREE.MeshStandardMaterial({
-        color: 0xccff00, // neo-green
+        color: 0xff0055, // neo-pink metallizado
         roughness: 0.2,
         metalness: 0.8,
       });
@@ -693,80 +712,20 @@ import aMediasImg from "../assets/images/AMediasPoster.jpeg";
       const group = new THREE.Group();
       scene.add(group);
 
-      const loader = new GLTFLoader();
-      loader.load(
-        "/Personaje.glb",
-        (gltf: any) => {
-          const model = gltf.scene;
+      // ==============================
+      // 🕹️ MODELO 3D ESTÁNDAR DE PRUEBA
+      // ==============================
+      // Aumentado su tamaño a un radio de 3.5
+      const geometry = new THREE.IcosahedronGeometry(3.5, 0);
 
-          // ==============================
-          // 🕹️ CONFIGURACIÓN DE TU MODELO 3D
-          // ==============================
-          // Si el modelo 3D no se ve o es súper pequeño/gigante,
-          // modifica esta 'ESCALA_MANUAL' y reinicia el servidor.
-          const USAR_ESCALA_RAPIDA = true;
-          const ESCALA_MANUAL = 0.5; // <-- Juega con este número (ej: 0.1, 1.0, 5.0, 10.0)
-          const BAJAR_MODELO = -1.0;
+      const model = new THREE.Mesh(geometry, materialSolid);
+      const wireframe = new THREE.Mesh(geometry, material);
+      wireframe.scale.setScalar(1.02);
+      model.add(wireframe);
 
-          if (USAR_ESCALA_RAPIDA) {
-            model.scale.setScalar(ESCALA_MANUAL);
-            model.position.y = BAJAR_MODELO;
-            console.log("🚀 Modelo 3D cargado correctamente:", gltf);
-          } else {
-            // Lógica antigua de matemáticas y bounding boxes
-            const box = new THREE.Box3();
-            box.setFromObject(model);
-            const sizeCheck = box.getSize(new THREE.Vector3());
-            if (sizeCheck.length() === 0 || sizeCheck.length() > 1000) {
-              box.makeEmpty();
-              model.traverse((child: any) => {
-                if (child.isMesh) {
-                  child.geometry.computeBoundingBox();
-                  const childBox = child.geometry.boundingBox.clone();
-                  child.updateMatrixWorld(true);
-                  childBox.applyMatrix4(child.matrixWorld);
-                  box.union(childBox);
-                }
-              });
-            }
-            const center = box.getCenter(new THREE.Vector3());
-            const size = box.getSize(new THREE.Vector3());
-            const maxDim = Math.max(size.x, size.y, size.z) || 1;
-            const scale = 3.5 / maxDim;
-            model.scale.setScalar(scale);
-            model.position.sub(center.clone().multiplyScalar(scale));
-            model.position.y -= 0.5;
-          }
-
-          // Override materials with the neo-green metal solid and wireframe loop
-          model.traverse((child: any) => {
-            if (child.isMesh) {
-              child.material = materialSolid;
-
-              // Add a slight wireframe clone for the brutalist UI style
-              if (child.isSkinnedMesh) {
-                const wireframe = new THREE.SkinnedMesh(
-                  child.geometry,
-                  material,
-                );
-                wireframe.bind(child.skeleton, child.bindMatrix);
-                wireframe.scale.setScalar(1.02);
-                child.add(wireframe);
-              } else {
-                const wireframe = new THREE.Mesh(child.geometry, material);
-                wireframe.scale.setScalar(1.02);
-                child.add(wireframe);
-              }
-            }
-          });
-
-          group.add(model);
-        },
-        undefined,
-        (error: any) => {
-          console.error("Error loading 3D model from /Personaje.glb:", error);
-        },
-      );
+      // Centrado perfecto al tamaño nativo
+      model.position.y -= 0.5;
+      group.add(model);
 
       const renderer = new THREE.WebGLRenderer({
         canvas: canvas,
@@ -790,13 +749,30 @@ import aMediasImg from "../assets/images/AMediasPoster.jpeg";
 
       const timer = new THREE.Timer();
 
+      // Mouse interactive target states
+      let mouseX = 0;
+      let mouseY = 0;
+      let targetRotationX = 0;
+      let targetRotationY = 0;
+
+      window.addEventListener("mousemove", (event) => {
+        if (!canvasContainer) return;
+
+        mouseX = event.clientX / window.innerWidth - 0.5;
+        mouseY = event.clientY / window.innerHeight - 0.5;
+      });
+
       const tick = () => {
         timer.update();
         const elapsedTime = timer.getElapsed();
 
-        // Idle rotation
-        group.rotation.y = elapsedTime * 0.15;
-        group.rotation.x = elapsedTime * 0.1;
+        // Smoothly interpolate towards target mouse position
+        targetRotationX += (mouseY * 2.5 - targetRotationX) * 0.05;
+        targetRotationY += (mouseX * 2.5 - targetRotationY) * 0.05;
+
+        // Combinar rotación contínua (Idle) con la interacción de mouse
+        group.rotation.y = elapsedTime * 0.15 + targetRotationY;
+        group.rotation.x = elapsedTime * 0.1 + targetRotationX;
 
         // Floating effect
         group.position.y += Math.sin(elapsedTime) * 0.002;
@@ -805,23 +781,6 @@ import aMediasImg from "../assets/images/AMediasPoster.jpeg";
         window.requestAnimationFrame(tick);
       };
       tick();
-
-      // Mouse interactive rotation with GSAP matching
-      let mouse = { x: 0, y: 0 };
-      window.addEventListener("mousemove", (event) => {
-        if (!canvasContainer) return;
-
-        // Only react fully if window is close to the container, or we just map it globally still but gentler
-        mouse.x = event.clientX / window.innerWidth - 0.5;
-        mouse.y = event.clientY / window.innerHeight - 0.5;
-
-        gsap.to(group.rotation, {
-          x: group.rotation.x + mouse.y * 1.5,
-          y: group.rotation.y + mouse.x * 1.5,
-          duration: 2,
-          ease: "power2.out",
-        });
-      });
 
       /**============================================
        * GSAP UI ANIMATIONS
@@ -873,12 +832,10 @@ import aMediasImg from "../assets/images/AMediasPoster.jpeg";
         start: "top top",
         end: "bottom bottom",
         onUpdate: (self) => {
-          gsap.to(group.rotation, {
-            y: "+=" + self.getVelocity() / 1000,
-            z: "+=" + self.getVelocity() / 2000,
-            duration: 0.5,
-            ease: "power1.out",
-          });
+          // Sum velocity up to target rotations so it works together with mouse
+          // Slowed down scroll impact significantly so it doesn't spin wildly
+          targetRotationY += self.getVelocity() / 25000;
+          targetRotationX += self.getVelocity() / 50000;
         },
       });
     </script>
