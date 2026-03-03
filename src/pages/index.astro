@@ -273,6 +273,7 @@ import "../styles/global.css";
 
     <script>
       import * as THREE from "three";
+      import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
       import { gsap } from "gsap";
       import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -296,9 +297,9 @@ import "../styles/global.css";
           40,
           audioCtx.currentTime + 0.1,
         );
-        gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
+        gainNode.gain.setValueAtTime(0.015, audioCtx.currentTime);
         gainNode.gain.exponentialRampToValueAtTime(
-          0.001,
+          0.0001,
           audioCtx.currentTime + 0.1,
         );
         osc.connect(gainNode);
@@ -366,9 +367,9 @@ import "../styles/global.css";
               800,
               audioCtx.currentTime + 0.1,
             );
-            gain.gain.setValueAtTime(0.02, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.005, audioCtx.currentTime);
             gain.gain.exponentialRampToValueAtTime(
-              0.001,
+              0.0001,
               audioCtx.currentTime + 0.1,
             );
             osc.connect(gain);
@@ -396,8 +397,6 @@ import "../styles/global.css";
       camera.position.z = 6;
       scene.add(camera);
 
-      // Dynamic, twisted geometry for "modeling" feel
-      const geometry = new THREE.TorusKnotGeometry(1.2, 0.4, 150, 40);
       // Wireframe looks highly brutalist/technical
       const material = new THREE.MeshBasicMaterial({
         color: 0x000000,
@@ -424,13 +423,39 @@ import "../styles/global.css";
       blueLight.position.set(-5, -5, 2);
       scene.add(blueLight);
 
-      const mesh = new THREE.Mesh(geometry, materialSolid);
-      const meshWireframe = new THREE.Mesh(geometry, material);
-      meshWireframe.scale.set(1.01, 1.01, 1.01);
-
       const group = new THREE.Group();
-      group.add(mesh, meshWireframe);
       scene.add(group);
+
+      const loader = new GLTFLoader();
+      loader.load("/Personaje.glb", (gltf: any) => {
+        const model = gltf.scene;
+
+        // Auto-scale to fit roughly within 2.5 unit bounds
+        const box = new THREE.Box3().setFromObject(model);
+        const center = box.getCenter(new THREE.Vector3());
+        const size = box.getSize(new THREE.Vector3());
+
+        const maxDim = Math.max(size.x, size.y, size.z);
+        const scale = 2.5 / maxDim;
+        model.scale.setScalar(scale);
+
+        // Center the model in the group
+        model.position.sub(center.clone().multiplyScalar(scale));
+
+        // Override materials with the neo-green metal solid and wireframe loop
+        model.traverse((child: any) => {
+          if (child.isMesh) {
+            child.material = materialSolid;
+
+            // Add a slight wireframe clone for the brutalist UI style
+            const wireframe = new THREE.Mesh(child.geometry, material);
+            wireframe.scale.setScalar(1.01);
+            child.add(wireframe);
+          }
+        });
+
+        group.add(model);
+      });
 
       const renderer = new THREE.WebGLRenderer({
         canvas: canvas,
