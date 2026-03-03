@@ -608,30 +608,42 @@ import demoReel from "../assets/videos/DemoReelSimple.mp4";
         window.AudioContext || (window as any).webkitAudioContext;
       let audioCtx: AudioContext | null = null;
 
-      const playBoop = () => {
-        if (!audioCtx) audioCtx = new AudioContext(); // Init on first interaction
-        if (audioCtx.state === "suspended") audioCtx.resume();
-        const osc = audioCtx.createOscillator();
-        const gainNode = audioCtx.createGain();
+      const playBoop = async () => {
+        if (!audioCtx) return; // Prevent errors if context wasn't created properly
+
+        if (audioCtx.state === "suspended") await audioCtx.resume();
+        // Return early if the interaction wasn't a manual trigger resulting in a running state
+        if (audioCtx.state !== "running") return;
+
+        const ctx = audioCtx; // bind for non-null checks logically for typescript
+        const osc = ctx.createOscillator();
+        const gainNode = ctx.createGain();
         osc.type = "square";
-        osc.frequency.setValueAtTime(150, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(
-          40,
-          audioCtx.currentTime + 0.1,
-        );
-        gainNode.gain.setValueAtTime(0.015, audioCtx.currentTime);
+        osc.frequency.setValueAtTime(150, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(40, ctx.currentTime + 0.1);
+        gainNode.gain.setValueAtTime(0.015, ctx.currentTime);
         gainNode.gain.exponentialRampToValueAtTime(
           0.0001,
-          audioCtx.currentTime + 0.1,
+          ctx.currentTime + 0.1,
         );
         osc.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
+        gainNode.connect(ctx.destination);
         osc.start();
-        osc.stop(audioCtx.currentTime + 0.1);
+        osc.stop(ctx.currentTime + 0.1);
       };
 
       document.querySelectorAll("a, .sound-hover").forEach((el) => {
-        el.addEventListener("mouseenter", playBoop);
+        el.addEventListener("mouseenter", () => {
+          // Initialize AudioContext if not already done, usually requires user interaction beforehand
+          if (!audioCtx) {
+            try {
+              audioCtx = new AudioContext();
+            } catch (e) {
+              return;
+            }
+          }
+          playBoop();
+        });
       });
 
       /**============================================
