@@ -1,0 +1,984 @@
+---
+import { Image } from "astro:assets";
+import "../styles/global.css";
+
+import maikImg from "../assets/images/Maik.jpeg";
+import dimensioImg from "../assets/images/MockupDimensio.png";
+import smogImg from "../assets/images/PosterSmog.png";
+import aMediasImg from "../assets/images/AMediasPoster.jpeg";
+import demoReel from "../assets/videos/DemoReelSimple.mp4";
+
+export interface Props {
+  lang: "es" | "en";
+}
+const { lang = "es" } = Astro.props;
+
+const t = {
+  hi: { es: "HOLA, SOY", en: "HELLO, I'M" },
+  portfolio: { es: "[ PORTAFOLIO ]", en: "[ PORTFOLIO ]" },
+  job: {
+    es: "Ingeniero en Diseño de Entretenimiento Digital",
+    en: "Digital Entertainment Design Engineer",
+  },
+  desc: {
+    es: "No te aburro con líneas genéricas, dejo que mis visuales hablen por mí. Código crudo, experiencias memorables y píxeles en tres dimensiones disparados al navegador.",
+    en: "I won't bore you with generic lines, I let my visuals speak for me. Raw code, memorable experiences, and 3D pixels fired into the browser.",
+  },
+  contact_btn: { es: "CONTÁCTAME →", en: "CONTACT ME →" },
+  marquee1: {
+    es: "DESARROLLO CREATIVO &nbsp; • &nbsp; ANIMACIÓN 3D &nbsp; • &nbsp; INTERFACES BRUTALISTAS",
+    en: "CREATIVE DEVELOPMENT &nbsp; • &nbsp; 3D ANIMATION &nbsp; • &nbsp; BRUTALIST INTERFACES",
+  },
+  arsenal: { es: "MI <br /> ARSENAL", en: "MY <br /> ARSENAL" },
+  soft_skills_title: { es: "Habilidades Blandas", en: "Soft Skills" },
+  skills: {
+    "Resolución de problemas": "Problem Solving",
+    Creatividad: "Creativity",
+    "Trabajo en equipo": "Teamwork",
+    Adaptabilidad: "Adaptability",
+    "Comunicación asertiva": "Assertive Communication",
+    "Pensamiento lateral": "Lateral Thinking",
+    "IAs generativas": "Generative AIs",
+  },
+  why_me_title: { es: "¿POR QUÉ YO?", en: "WHY ME?" },
+  why_me_desc: {
+    es: "Me especializo en crear productos visualmente magnéticos y funcionalmente impecables. Mi estilo es versátil: puedo abrazar desde el minimalismo más pulido hasta interfaces brutalistas o inmersivas que desafían las convenciones.",
+    en: "I specialize in creating visually magnetic and functionally flawless products. My style is versatile: I can embrace everything from highly polished minimalism to brutalist or immersive interfaces that defy conventions.",
+  },
+  marquee2: {
+    es: "HARD SURFACE &nbsp; • &nbsp; REALIDAD VIRTUAL &nbsp; • &nbsp; DISEÑO DE ENTORNOS",
+    en: "HARD SURFACE &nbsp; • &nbsp; VIRTUAL REALITY &nbsp; • &nbsp; ENVIRONMENT DESIGN",
+  },
+  projects_title: { es: "PROYECTOS", en: "PROJECTS" },
+  dimensios_desc: {
+    es: "Un portal inmersivo construido con React Three Fiber. Este experimento demuestra el uso de shaders procedimentales y físicas 3D aplicadas directamente al navegador moderno, rompiendo lo estático. Integra además la capacidad técnica de cargar interactivamente y probar tus propios modelos 3D.",
+    en: "An immersive portal built with React Three Fiber. This experiment demonstrates the use of procedural shaders and 3D physics applied directly to the modern browser, breaking away from static pages. It also integrates the technical capability to interactively load and test your own 3D models.",
+  },
+  interactive_experience: {
+    es: "Experiencia 3D Interactiva",
+    en: "Interactive 3D Experience",
+  },
+  smog_title: {
+    es: "LA VENGANZA <br />DEL SMOG",
+    en: "LA VENGANZA <br />DEL SMOG",
+  },
+  smog_desc: {
+    es: "Un atrapante plataformero de acción 2D inspirado en los clásicos arcade y bañado en una rica estética Pixel Art. Toda la atmósfera y temática del proyecto está directamente basada en Medellín y la intensa problemática real de su contaminación.",
+    en: "A captivating 2D action platformer inspired by arcade classics and bathed in a rich Pixel Art aesthetic. The entire atmosphere and theme of the project is directly based on Medellín and its intense real-world pollution problem.",
+  },
+  platformer: {
+    es: "Plataformero 2D / Pixel Art",
+    en: "2D Platformer / Pixel Art",
+  },
+  watch_gameplay: {
+    es: "Ver Gameplay en YouTube",
+    en: "Watch Gameplay on YouTube",
+  },
+  amedias_desc: {
+    es: "Animación 3D interactiva, donde puedes vivir en carne propia el sorprendente mundo bajo la cama en Realidad Virtual. Acompaña a nuestra protagonista Nona en la férrea búsqueda de su pareja, mientras afronta complejas situaciones sobre el apego emocional y la superación de sus problemas.",
+    en: "Interactive 3D animation, where you can experience firsthand the surprising world under the bed in Virtual Reality. Join our protagonist Nona in the fierce search for her partner, while confronting complex situations involving emotional attachment and overcoming her problems.",
+  },
+  vr_interactive: { es: "VR / Interactivo", en: "VR / Interactive" },
+  vr_animation: {
+    es: "Animación interactiva en Realidad Virtual",
+    en: "Interactive Animation in Virtual Reality",
+  },
+  animation_title: { es: "ANIMACIÓN GENERAL", en: "GENERAL ANIMATION" },
+  animation_tags: {
+    es: "Animación 3D, 2D y VFX",
+    en: "3D Animation, 2D and VFX",
+  },
+  animation_desc: {
+    es: "Una colección con algunas de mis piezas animadas. El carrete abarca un rango técnico diverso que va desde lip syncs y walk cycles estructurados, hasta simulaciones tridimensionales fluidas.",
+    en: "A collection featuring some of my animated pieces. The reel spans a diverse technical range, from structured lip syncs and walk cycles, to fluid three-dimensional simulations.",
+  },
+  lets_talk: { es: "HABLEMOS", en: "LET'S TALK" },
+  made_with: { es: "HECHO CON", en: "MADE WITH" },
+  attitude: { es: "ACTITUD", en: "ATTITUDE" },
+};
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href={lang === "en" ? "../favicon-neo.svg" : "/favicon-neo.svg"}
+    />
+    <link
+      rel="shortcut icon"
+      href={lang === "en" ? "../favicon-neo.svg" : "/favicon-neo.svg"}
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MICHAEL ZAPATA | CREATIVE DEVELOPER & 3D ARTIST</title>
+  </head>
+  <body class="bg-paper text-black">
+    <!-- Language Switch -->
+    <div
+      class="fixed top-6 right-6 lg:top-10 lg:right-10 z-[100] brutal-shadow border-4 border-black bg-white flex items-center"
+    >
+      <a
+        href="/"
+        class={`px-3 py-1 font-display font-black text-sm uppercase ${lang === "es" ? "bg-black text-white" : "hover:bg-neo-blue transition-colors text-black"}`}
+        >ES</a
+      >
+      <a
+        href="/en/"
+        class={`px-3 py-1 font-display font-black text-sm uppercase ${lang === "en" ? "bg-black text-white" : "hover:bg-neo-pink transition-colors text-black"}`}
+        >EN</a
+      >
+    </div>
+
+    <!-- 3D Canvas Background Removed, see Hero -->
+
+    <div class="noise-overlay"></div>
+
+    <div
+      class="relative z-10 wrapper w-full min-h-screen overflow-hidden flex flex-col gap-32"
+    >
+      <!-- Hero Header -->
+      <header
+        class="min-h-screen w-full flex flex-col justify-center items-start px-6 sm:px-12 md:px-20 lg:px-32 pt-24"
+      >
+        <div
+          class="brutal-box bg-neo-green px-4 py-2 mt-0 mb-1 sm:mb-2 inline-block transform -rotate-2 brutal-shadow init-animate"
+        >
+          <span
+            class="font-display font-black text-xl md:text-2xl uppercase tracking-tighter"
+            >{t.hi[lang]}</span
+          >
+        </div>
+
+        <div class="flex flex-col items-start gap-0 relative">
+          <h1
+            class="text-[14vw] sm:text-[16vw] leading-[0.85] font-black text-outline uppercase relative title-animate inline-block group cursor-crosshair interactive-name m-0 p-0"
+          >
+            <span class="block hover-glitch" data-text="Michael">Michael</span>
+            <span
+              class="text-black -webkit-text-stroke-0 block hover-glitch"
+              data-text="Zapata">Zapata</span
+            >
+          </h1>
+
+          <div
+            class="relative z-10 group cursor-crosshair portfolio-badge init-animate inline-block self-end -mt-2 sm:-mt-4 md:-mt-6 mr-2 sm:mr-8 md:mr-12 opacity-0"
+          >
+            <span
+              class="inline-block font-display font-black text-[10px] sm:text-xs md:text-sm tracking-[0.2em] md:tracking-[0.3em] uppercase border-4 border-black px-3 py-1 md:px-4 md:py-2 bg-paper hover:bg-black hover:text-white transition-colors duration-300"
+            >
+              {t.portfolio[lang]}
+            </span>
+          </div>
+        </div>
+
+        <div
+          class="mt-8 md:mt-12 relative w-full flex flex-col lg:flex-row justify-between items-center gap-8 lg:gap-12 desc-box"
+        >
+          <!-- 3D Canvas Box -->
+          <div
+            id="canvas-container"
+            class="w-full lg:w-1/2 xl:w-7/12 h-[500px] sm:h-[650px] lg:h-[750px] cursor-crosshair init-animate flex justify-center items-center"
+          >
+            <canvas id="webgl" class="w-full h-full outline-none block"
+            ></canvas>
+          </div>
+          <!-- Pink Text Box -->
+          <div
+            class="brutal-box bg-neo-pink text-white w-full sm:w-3/4 lg:w-1/2 xl:w-5/12 p-6 md:p-10 brutal-shadow rotate-1 transform-gpu init-animate delay-200 z-10 relative"
+          >
+            <!-- Photo Placeholder -->
+            <div
+              class="absolute -top-12 -right-8 md:-top-16 md:-right-16 w-24 h-24 sm:w-32 sm:h-32 border-4 border-black bg-white brutal-shadow rotate-6 overflow-hidden flex items-center justify-center z-20"
+            >
+              <Image
+                src={maikImg}
+                alt="Michael"
+                class="w-full h-full object-cover absolute inset-0"
+              />
+            </div>
+
+            <p
+              class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-display font-black leading-tight uppercase relative z-10 pr-20 md:pr-28 break-words hyphens-auto"
+            >
+              {t.job[lang]}
+            </p>
+            <p
+              class="mt-6 text-lg sm:text-xl md:text-2xl font-body font-medium leading-relaxed"
+            >
+              {t.desc[lang]}
+            </p>
+            <a
+              href="#contacto"
+              class="inline-block bg-black text-white w-max mt-8 px-8 py-4 font-display font-black text-lg md:text-xl border-4 border-black hover:bg-neo-blue hover:text-white hover:border-black transition-colors sound-hover"
+              >{t.contact_btn[lang]}</a
+            >
+          </div>
+        </div>
+      </header>
+
+      <!-- Marquee divider -->
+      <div
+        class="marquee-container -rotate-2 z-20 brutal-shadow relative w-full overflow-hidden"
+      >
+        <div class="marquee-content text-black flex items-center">
+          <span
+            set:html={`${t.marquee1[lang]} &nbsp; • &nbsp; ${t.marquee1[lang]} &nbsp; • &nbsp; `}
+          />
+          <span
+            set:html={`${t.marquee1[lang]} &nbsp; • &nbsp; ${t.marquee1[lang]} &nbsp; • &nbsp; `}
+          />
+        </div>
+      </div>
+
+      <!-- Arsenal Section -->
+      <section
+        class="py-16 md:py-24 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-12 items-start border-t-8 border-black pt-20 px-6 sm:px-12 md:px-20 lg:px-32"
+      >
+        <div class="w-full relative z-10 overflow-hidden lg:overflow-visible">
+          <h2
+            class="text-[12vw] sm:text-5xl md:text-6xl font-black mb-8 leading-none max-w-full break-words"
+            set:html={t.arsenal[lang]}
+          />
+          <div class="flex flex-wrap gap-2 sm:gap-3 mb-16">
+            {
+              [
+                { n: "Three.JS", c: "hover:bg-neo-blue" },
+                { n: "HTML", c: "hover:bg-neo-orange" },
+                { n: "CSS", c: "hover:bg-neo-blue" },
+                { n: "JS", c: "hover:bg-neo-green hover:text-black" },
+                { n: "Blender", c: "hover:bg-neo-orange" },
+                { n: "Maya", c: "hover:bg-neo-blue" },
+                { n: "Adobe Suite", c: "hover:bg-neo-pink" },
+                { n: "Office Suite", c: "hover:bg-neo-orange" },
+                { n: "Aseprite", c: "hover:bg-neo-blue" },
+                { n: "Unity", c: "hover:bg-black" },
+                { n: "Git/Github", c: "hover:bg-gray-800" },
+                { n: "IAs generativas", c: "hover:bg-neo-pink" },
+              ].map((skill) => (
+                <span
+                  class={`px-3 py-2 sm:px-5 sm:py-3 border-4 border-black bg-white font-display font-black text-xs sm:text-sm md:text-base uppercase brutal-shadow ${skill.c} hover:text-white transition-colors cursor-crosshair sound-hover`}
+                >
+                  {lang === "es"
+                    ? skill.n
+                    : t.skills[skill.n as keyof typeof t.skills] || skill.n}
+                </span>
+              ))
+            }
+          </div>
+
+          <h3 class="text-3xl sm:text-4xl font-black mb-6 uppercase">
+            {t.soft_skills_title[lang]}
+          </h3>
+          <div class="flex flex-wrap gap-2 sm:gap-3">
+            {
+              [
+                "Resolución de problemas",
+                "Creatividad",
+                "Trabajo en equipo",
+                "Adaptabilidad",
+                "Comunicación asertiva",
+                "Pensamiento lateral",
+              ].map((skill) => (
+                <span
+                  class={`px-3 py-2 sm:px-4 sm:py-2 border-4 border-black bg-neo-green font-display font-black text-xs sm:text-sm uppercase brutal-shadow hover:bg-black hover:text-white transition-colors cursor-crosshair sound-hover`}
+                >
+                  {lang === "es"
+                    ? skill
+                    : t.skills[skill as keyof typeof t.skills] || skill}
+                </span>
+              ))
+            }
+          </div>
+        </div>
+
+        <div
+          class="flex flex-col items-center justify-start lg:justify-end gap-12 mt-4 lg:mt-0 w-full"
+        >
+          <div
+            class="bg-neo-orange p-6 sm:p-8 md:p-12 border-4 border-black brutal-shadow w-full max-w-xl rotate-1 transform-gpu z-0"
+          >
+            <h3 class="text-4xl md:text-5xl font-black mb-6">
+              {t.why_me_title[lang]}
+            </h3>
+            <p
+              class="text-xl md:text-2xl font-body font-medium leading-relaxed"
+            >
+              {t.why_me_desc[lang]}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Second Marquee divider -->
+      <div
+        class="marquee-container rotate-2 z-20 brutal-shadow relative w-full overflow-hidden"
+      >
+        <div class="marquee-content text-black flex items-center">
+          <span
+            set:html={`${t.marquee2[lang]} &nbsp; • &nbsp; ${t.marquee2[lang]} &nbsp; • &nbsp; `}
+          />
+          <span
+            set:html={`${t.marquee2[lang]} &nbsp; • &nbsp; ${t.marquee2[lang]} &nbsp; • &nbsp; `}
+          />
+        </div>
+      </div>
+
+      <!-- Playground Section -->
+      <section
+        class="py-20 md:py-32 px-6 sm:px-12 md:px-20 lg:px-32 border-t-8 border-black"
+      >
+        <h2
+          class="text-[12vw] sm:text-[10vw] md:text-8xl font-black mb-20 text-center text-outline leading-tight"
+        >
+          {t.projects_title[lang]}
+        </h2>
+        <div
+          class="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-12 w-full mx-auto"
+        >
+          <!-- Card 1 (Dimensios) -->
+          <a
+            href="https://michaelzapataag-dimensios.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="block group relative cursor-crosshair lg:col-span-2"
+          >
+            <div
+              class="absolute inset-0 bg-neo-blue border-4 border-black translate-x-4 translate-y-4 transition-transform group-hover:translate-x-8 group-hover:translate-y-8"
+            >
+            </div>
+            <div
+              class="relative bg-white border-4 border-black p-6 sm:p-8 flex flex-col md:flex-row lg:flex-row gap-8 transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2 overflow-hidden min-h-[400px]"
+            >
+              <div
+                class="absolute -right-16 -top-16 w-56 h-56 bg-neo-green rounded-full opacity-60 blur-xl group-hover:blur-3xl transition-all duration-500 group-hover:scale-150"
+              >
+              </div>
+
+              <!-- Mockup Image Slot -->
+              <div
+                class="w-full md:w-1/2 lg:w-1/2 aspect-video md:aspect-auto min-h-[200px] border-4 border-black bg-white flex items-center justify-center relative z-10 overflow-hidden group"
+              >
+                <Image
+                  src={dimensioImg}
+                  alt="Dimensios"
+                  class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+
+              <div
+                class="w-full md:w-1/2 lg:w-1/2 flex flex-col justify-center"
+              >
+                <div
+                  class="flex justify-between items-start z-10 relative mb-4"
+                >
+                  <h3 class="text-3xl sm:text-4xl lg:text-5xl font-black">
+                    DIMENSIOS
+                  </h3>
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="hidden md:block w-8 h-8 lg:w-12 lg:h-12 fill-current text-black"
+                  >
+                    <path
+                      d="M14 2H5.50003L4.00003 3.5L6.83581 6.33579L0.585815 12.5858L3.41424 15.4142L9.66424 9.16421L12.5 12L14 10.5L14 2Z"
+                      fill="currentColor"></path>
+                  </svg>
+                </div>
+
+                <p
+                  class="font-body text-lg md:text-xl font-medium mb-6 relative z-10"
+                >
+                  {t.dimensios_desc[lang]}
+                </p>
+
+                <div class="z-10 relative mt-auto">
+                  <span
+                    class="bg-black text-white px-3 py-1 text-xs sm:text-sm font-bold uppercase mb-2 inline-block"
+                    >Three.js + React</span
+                  >
+                  <p class="font-body text-xl md:text-2xl font-bold">
+                    {t.interactive_experience[lang]}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <!-- Card 2 (Smog) -->
+          <a
+            href="https://youtu.be/BPYK-eoCLBw"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="block group relative cursor-crosshair sound-hover lg:row-span-2"
+          >
+            <div
+              class="absolute inset-0 bg-neo-pink border-4 border-black translate-x-4 translate-y-4 transition-transform group-hover:translate-x-8 group-hover:translate-y-8"
+            >
+            </div>
+            <div
+              class="relative bg-white border-4 border-black p-6 sm:p-8 flex flex-col md:flex-row lg:flex-col xl:flex-row gap-8 transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2 overflow-hidden h-full min-h-[400px]"
+            >
+              <div
+                class="absolute -left-16 -bottom-16 w-56 h-56 bg-neo-orange rounded-none rotate-45 opacity-60 blur-xl group-hover:blur-3xl transition-all duration-500 group-hover:scale-150"
+              >
+              </div>
+
+              <!-- Mockup Image Slot -->
+              <div
+                class="w-full md:w-1/2 lg:w-full xl:w-1/2 aspect-[4/3] md:aspect-auto min-h-[250px] border-4 border-black bg-white flex items-center justify-center relative z-10 overflow-hidden group"
+              >
+                <Image
+                  src={smogImg}
+                  alt="Smog"
+                  class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+
+              <div
+                class="w-full md:w-1/2 lg:w-full xl:w-1/2 flex flex-col justify-center"
+              >
+                <div
+                  class="flex justify-between items-start z-10 relative mb-4"
+                >
+                  <h3
+                    class="text-3xl sm:text-4xl font-black leading-tight"
+                    set:html={t.smog_title[lang]}
+                  />
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="hidden md:block w-8 h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12 fill-current text-black shrink-0"
+                  >
+                    <path
+                      d="M14 2H5.50003L4.00003 3.5L6.83581 6.33579L0.585815 12.5858L3.41424 15.4142L9.66424 9.16421L12.5 12L14 10.5L14 2Z"
+                      fill="currentColor"></path>
+                  </svg>
+                </div>
+                <p
+                  class="font-body text-base md:text-lg font-medium mb-6 relative z-10"
+                >
+                  {t.smog_desc[lang]}
+                </p>
+                <div class="z-10 relative mt-auto">
+                  <span
+                    class="bg-black text-white px-3 py-1 text-xs sm:text-sm font-bold uppercase mb-2 inline-block"
+                    >{t.platformer[lang]}</span
+                  >
+                  <p class="font-body text-xl md:text-2xl font-bold">
+                    {t.watch_gameplay[lang]}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <!-- Card 3 (A Medias) -->
+          <a
+            href="https://www.youtube.com/watch?v=gH6VYi887M4"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="block group relative cursor-crosshair sound-hover lg:row-span-2"
+          >
+            <div
+              class="absolute inset-0 bg-neo-green border-4 border-black translate-x-4 translate-y-4 transition-transform group-hover:translate-x-8 group-hover:translate-y-8"
+            >
+            </div>
+            <div
+              class="relative bg-white border-4 border-black p-6 sm:p-8 flex flex-col md:flex-row lg:flex-col xl:flex-row gap-8 transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2 overflow-hidden h-full min-h-[400px]"
+            >
+              <!-- Mockup Image Slot -->
+              <div
+                class="w-full md:w-1/2 lg:w-full xl:w-1/2 aspect-video md:aspect-auto min-h-[250px] border-4 border-black bg-gray-200 flex items-center justify-center relative z-10 overflow-hidden group"
+              >
+                <Image
+                  src={aMediasImg}
+                  alt="A Medias VR"
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+
+              <div
+                class="w-full md:w-1/2 lg:w-full xl:w-1/2 flex flex-col justify-center"
+              >
+                <div
+                  class="flex justify-between items-start z-10 relative mb-4"
+                >
+                  <h3 class="text-3xl sm:text-4xl font-black leading-tight">
+                    A MEDIAS
+                  </h3>
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="hidden md:block w-8 h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12 fill-current text-black shrink-0"
+                  >
+                    <path
+                      d="M14 2H5.50003L4.00003 3.5L6.83581 6.33579L0.585815 12.5858L3.41424 15.4142L9.66424 9.16421L12.5 12L14 10.5L14 2Z"
+                      fill="currentColor"></path>
+                  </svg>
+                </div>
+                <p
+                  class="font-body text-base md:text-lg font-medium mb-6 relative z-10"
+                >
+                  {t.amedias_desc[lang]}
+                </p>
+                <div class="z-10 relative mt-auto">
+                  <span
+                    class="bg-black text-white px-3 py-1 text-xs sm:text-sm font-bold uppercase mb-2 inline-block"
+                    >{t.vr_interactive[lang]}</span
+                  >
+                  <p class="font-body text-xl md:text-2xl font-bold">
+                    {t.vr_animation[lang]}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <!-- Card 4 (Animaciones) -->
+          <div
+            class="group relative cursor-crosshair sound-hover lg:col-span-2"
+          >
+            <div
+              class="absolute inset-0 bg-black border-4 border-black translate-x-4 translate-y-4 transition-transform group-hover:translate-x-8 group-hover:translate-y-8"
+            >
+            </div>
+            <div
+              class="relative bg-white border-4 border-black p-6 sm:p-8 flex flex-col md:flex-row gap-8 transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2 overflow-hidden min-h-[300px]"
+            >
+              <!-- Mockup Image Slot -->
+              <div
+                class="w-full md:w-1/2 aspect-square min-h-[250px] border-4 border-black bg-black flex items-center justify-center relative z-10 overflow-hidden group"
+              >
+                <video
+                  src={demoReel}
+                  autoplay
+                  loop
+                  muted
+                  playsinline
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                ></video>
+              </div>
+
+              <div class="w-full md:w-1/2 flex flex-col justify-center">
+                <h3
+                  class="text-3xl sm:text-5xl font-black z-10 relative leading-tight mb-4 text-black"
+                >
+                  {t.animation_title[lang]}
+                </h3>
+                <div class="z-10 relative">
+                  <span
+                    class="bg-neo-green text-black border-2 border-black px-3 py-1 text-xs sm:text-sm font-bold uppercase mb-4 inline-block shadow-[2px_2px_0px_rgba(0,0,0,1)]"
+                    >{t.animation_tags[lang]}</span
+                  >
+                  <p class="font-body text-xl md:text-2xl font-medium mt-2">
+                    {t.animation_desc[lang]}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer
+        id="contacto"
+        class="pt-20 pb-10 border-t-8 border-black text-center relative z-20 bg-paper"
+      >
+        <div class="w-full flex justify-center mb-16">
+          <h2
+            class="text-[9vw] font-black hover:text-neo-blue transition-colors cursor-pointer text-outline hover:text-solid leading-[0.8] sound-hover group"
+          >
+            <a
+              href="mailto:michael.zapata.ag@gmail.com"
+              class="flex items-center justify-center gap-4 md:gap-8 hover:text-solid transition-colors"
+            >
+              <span
+                class="w-12 h-12 md:w-20 md:h-20 min-w-[3rem] min-h-[3rem] group-hover:animate-bounce flex-shrink-0"
+              >
+                <svg
+                  stroke="currentColor"
+                  stroke-width="0"
+                  class="w-full h-full text-black fill-current"
+                  viewBox="0 0 24 24"
+                  ><path
+                    stroke="none"
+                    d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2zm-2 0-8 5-8-5zm0 12H4V8l8 5 8-5z"
+                  ></path><path
+                    fill="none"
+                    stroke="none"
+                    d="M1 3h22v18H1z"
+                    class="stroke-current shadow-[2px_2px_0px_#ccff00]"
+                  ></path></svg
+                >
+              </span>
+              {t.lets_talk[lang]}
+              <span
+                class="w-[8vw] h-[8vw] max-w-[4rem] max-h-[4rem] min-w-[2rem] min-h-[2rem] text-solid transition-transform group-hover:translate-x-4 group-hover:-translate-y-4 flex items-center justify-center -ml-2 select-none"
+              >
+                <svg
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-full h-full fill-current"
+                >
+                  <path
+                    d="M14 2H5.50003L4.00003 3.5L6.83581 6.33579L0.585815 12.5858L3.41424 15.4142L9.66424 9.16421L12.5 12L14 10.5L14 2Z"
+                    fill="currentColor"></path>
+                </svg>
+              </span>
+            </a>
+          </h2>
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-4 md:gap-8 mb-20 px-4">
+          <a
+            href="mailto:michael.zapata.ag@gmail.com"
+            target="_blank"
+            rel="noreferrer"
+            class="px-5 py-3 border-4 border-black bg-white font-display font-black text-sm md:text-lg uppercase brutal-shadow hover:bg-neo-blue hover:text-white transition-colors cursor-crosshair"
+            >michael.zapata.ag@gmail.com</a
+          >
+          <a
+            href="https://wa.me/573022577219?text=Hola!%20Vi%20tu%20portafolio%20y%20me%20gustar%C3%ADa%20trabajar%20contigo"
+            target="_blank"
+            rel="noreferrer"
+            class="px-5 py-3 border-4 border-black bg-white font-display font-black text-sm md:text-lg uppercase brutal-shadow hover:bg-neo-green hover:text-black transition-colors cursor-crosshair"
+            >WhatsApp</a
+          >
+          <a
+            href="https://www.linkedin.com/in/michaelzapataag/"
+            target="_blank"
+            rel="noreferrer"
+            class="px-5 py-3 border-4 border-black bg-white font-display font-black text-sm md:text-lg uppercase brutal-shadow hover:bg-neo-pink hover:text-white transition-colors cursor-crosshair"
+            >LinkedIn</a
+          >
+          <a
+            href="https://github.com/MichaelZapataAg"
+            target="_blank"
+            rel="noreferrer"
+            class="px-5 py-3 border-4 border-black bg-white font-display font-black text-sm md:text-lg uppercase brutal-shadow hover:bg-black hover:text-white transition-colors cursor-crosshair"
+            >GitHub</a
+          >
+          <a
+            href="https://sketchfab.com/MichaelZapataAg"
+            target="_blank"
+            rel="noreferrer"
+            class="px-5 py-3 border-4 border-black bg-white font-display font-black text-sm md:text-lg uppercase brutal-shadow hover:bg-neo-orange hover:text-white transition-colors cursor-crosshair"
+            >Sketchfab</a
+          >
+        </div>
+
+        <p class="font-body font-bold text-xl uppercase tracking-wider">
+          © {new Date().getFullYear()} Michael Zapata - {t.made_with[lang]}
+          <span
+            class="bg-neo-green px-2 text-black border-2 border-black inline-block -rotate-3"
+            >{t.attitude[lang]}</span
+          >
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      import * as THREE from "three";
+      import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+      import { gsap } from "gsap";
+      import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      /**============================================
+       * AUDIO FEEDBACK
+       *=============================================**/
+      const AudioContext =
+        window.AudioContext || (window as any).webkitAudioContext;
+      let audioCtx: AudioContext | null = null;
+
+      const playBoop = async () => {
+        if (!audioCtx) return; // Prevent errors if context wasn't created properly
+
+        if (audioCtx.state === "suspended") await audioCtx.resume();
+        // Return early if the interaction wasn't a manual trigger resulting in a running state
+        if (audioCtx.state !== "running") return;
+
+        const ctx = audioCtx; // bind for non-null checks logically for typescript
+        const osc = ctx.createOscillator();
+        const gainNode = ctx.createGain();
+        osc.type = "square";
+        osc.frequency.setValueAtTime(150, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(40, ctx.currentTime + 0.1);
+        gainNode.gain.setValueAtTime(0.015, ctx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(
+          0.0001,
+          ctx.currentTime + 0.1,
+        );
+        osc.connect(gainNode);
+        gainNode.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.1);
+      };
+
+      document.querySelectorAll("a, .sound-hover").forEach((el) => {
+        el.addEventListener("mouseenter", () => {
+          // Initialize AudioContext if not already done, usually requires user interaction beforehand
+          if (!audioCtx) {
+            try {
+              audioCtx = new AudioContext();
+            } catch (e) {
+              return;
+            }
+          }
+          playBoop();
+        });
+      });
+
+      /**============================================
+       * INTERACTIVE MAGNETIC PORTFOLIO TEXT
+       *=============================================**/
+      const badge = document.querySelector(".portfolio-badge");
+      if (badge) {
+        badge.addEventListener("mousemove", (e: any) => {
+          const rect = badge.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+          gsap.to(badge, {
+            x: x * 0.4,
+            y: y * 0.4,
+            duration: 0.3,
+            ease: "power2.out",
+          });
+        });
+        badge.addEventListener("mouseleave", () => {
+          gsap.to(badge, {
+            x: 0,
+            y: 0,
+            duration: 0.5,
+            ease: "elastic.out(1, 0.3)",
+          });
+        });
+      }
+
+      /**============================================
+       * INTERACTIVE GLITCH NAME HOVER
+       *=============================================**/
+      const nameHoverElements = document.querySelectorAll(
+        ".interactive-name .hover-glitch",
+      );
+      nameHoverElements.forEach((el) => {
+        el.addEventListener("mouseenter", () => {
+          gsap.to(el, {
+            x: () => (Math.random() - 0.5) * 20,
+            y: () => (Math.random() - 0.5) * 20,
+            skewX: () => (Math.random() - 0.5) * 10,
+            duration: 0.1,
+            repeat: 3,
+            yoyo: true,
+            onComplete: () => {
+              gsap.to(el, { x: 0, y: 0, skewX: 0, duration: 0.2 });
+            },
+          });
+
+          if (audioCtx && audioCtx.state === "running") {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = "sawtooth";
+            osc.frequency.setValueAtTime(50, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(
+              800,
+              audioCtx.currentTime + 0.1,
+            );
+            gain.gain.setValueAtTime(0.005, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(
+              0.0001,
+              audioCtx.currentTime + 0.1,
+            );
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.1);
+          }
+        });
+      });
+
+      /**============================================
+       * 3D SCENE SETUP
+       *=============================================**/
+      const canvasContainer = document.querySelector("#canvas-container");
+      const canvas = document.querySelector(
+        "canvas#webgl",
+      ) as HTMLCanvasElement;
+      const scene = new THREE.Scene();
+
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        (canvasContainer?.clientWidth || window.innerWidth) /
+          (canvasContainer?.clientHeight || window.innerHeight),
+        0.1,
+        100,
+      );
+      camera.position.z = 6;
+      scene.add(camera);
+
+      // Wireframe looks highly brutalist/technical
+      const material = new THREE.MeshBasicMaterial({
+        color: 0x000000,
+        wireframe: true,
+        wireframeLinewidth: 2,
+        transparent: true,
+        opacity: 0.15,
+      });
+
+      // An optional second mesh for double depth
+      const materialSolid = new THREE.MeshStandardMaterial({
+        color: 0xff0055, // neo-pink metallizado
+        roughness: 0.2,
+        metalness: 0.8,
+      });
+
+      // Add lighting for the solid mesh
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+      scene.add(ambientLight);
+      const dirLight = new THREE.DirectionalLight(0xff0055, 2); // pink light
+      dirLight.position.set(5, 5, 5);
+      scene.add(dirLight);
+      const blueLight = new THREE.DirectionalLight(0x0033ff, 2);
+      blueLight.position.set(-5, -5, 2);
+      scene.add(blueLight);
+
+      const group = new THREE.Group();
+      scene.add(group);
+
+      // ==============================
+      // 🕹️ MODELO 3D ESTÁNDAR DE PRUEBA
+      // ==============================
+      // Aumentado su tamaño a un radio de 3.2 para que no se corte
+      const geometry = new THREE.IcosahedronGeometry(3.2, 0);
+
+      const model = new THREE.Mesh(geometry, materialSolid);
+      const wireframe = new THREE.Mesh(geometry, material);
+      wireframe.scale.setScalar(1.02);
+      model.add(wireframe);
+
+      // Centrado perfecto al tamaño nativo
+      model.position.y -= 0.5;
+      group.add(model);
+
+      const renderer = new THREE.WebGLRenderer({
+        canvas: canvas,
+        alpha: true,
+        antialias: true,
+      });
+
+      const updateSize = () => {
+        if (!canvasContainer) return;
+        const width = canvasContainer.clientWidth;
+        const height = canvasContainer.clientHeight;
+        renderer.setSize(width, height);
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+      };
+
+      updateSize();
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      window.addEventListener("resize", updateSize);
+
+      const timer = new THREE.Timer();
+
+      // Mouse interactive target states
+      let mouseX = 0;
+      let mouseY = 0;
+      let targetRotationX = 0;
+      let targetRotationY = 0;
+
+      window.addEventListener("mousemove", (event) => {
+        if (!canvasContainer) return;
+
+        mouseX = event.clientX / window.innerWidth - 0.5;
+        mouseY = event.clientY / window.innerHeight - 0.5;
+      });
+
+      const tick = () => {
+        timer.update();
+        const elapsedTime = timer.getElapsed();
+
+        // Smoothly interpolate towards target mouse position
+        targetRotationX += (mouseY * 2.5 - targetRotationX) * 0.05;
+        targetRotationY += (mouseX * 2.5 - targetRotationY) * 0.05;
+
+        // Combinar rotación contínua (Idle) con la interacción de mouse
+        group.rotation.y = elapsedTime * 0.15 + targetRotationY;
+        group.rotation.x = elapsedTime * 0.1 + targetRotationX;
+
+        // Floating effect
+        group.position.y += Math.sin(elapsedTime) * 0.002;
+
+        renderer.render(scene, camera);
+        window.requestAnimationFrame(tick);
+      };
+      tick();
+
+      /**============================================
+       * GSAP UI ANIMATIONS
+       *=============================================**/
+      // Initial Load Animation
+      const tl = gsap.timeline();
+
+      tl.from(".title-animate", {
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        ease: "power4.out",
+        delay: 0.2,
+      })
+        .fromTo(
+          ".init-animate",
+          {
+            scale: 0.8,
+            rotation: -10,
+            opacity: 0,
+          },
+          {
+            scale: 1,
+            rotation: 0, // Reset to inline block natural rotation or keep existing base. For the rotated box we might need from() without rotation if it breaks it, let's use a clear fromTo to keep opacity stable.
+            opacity: 1,
+            clearProps: "scale,rotation",
+            duration: 0.8,
+            stagger: 0.2,
+            ease: "back.out(1.5)",
+          },
+          "-=0.5",
+        )
+        .from(
+          group.scale,
+          {
+            x: 0,
+            y: 0,
+            z: 0,
+            duration: 1.5,
+            ease: "elastic.out(1, 0.75)",
+          },
+          "-=1",
+        );
+
+      // Animate 3D object dynamically based on scroll
+      // Global spin and float
+      ScrollTrigger.create({
+        trigger: "body",
+        start: "top top",
+        end: "bottom bottom",
+        onUpdate: (self) => {
+          // Sum velocity up to target rotations so it works together with mouse
+          // Slowed down scroll impact significantly so it doesn't spin wildly
+          targetRotationY += self.getVelocity() / 25000;
+          targetRotationX += self.getVelocity() / 50000;
+        },
+      });
+    </script>
+  </body>
+</html>
