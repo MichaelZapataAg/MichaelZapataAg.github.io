@@ -66,12 +66,23 @@ import "../styles/global.css";
           </div>
           <!-- Pink Text Box -->
           <div
-            class="brutal-box bg-neo-pink text-white w-full sm:w-3/4 lg:w-1/2 xl:w-5/12 p-6 md:p-10 brutal-shadow rotate-1 transform-gpu init-animate delay-200 z-10"
+            class="brutal-box bg-neo-pink text-white w-full sm:w-3/4 lg:w-1/2 xl:w-5/12 p-6 md:p-10 brutal-shadow rotate-1 transform-gpu init-animate delay-200 z-10 relative"
           >
-            <p
-              class="text-2xl sm:text-3xl md:text-5xl font-display font-black leading-tight uppercase"
+            <!-- Photo Placeholder -->
+            <div
+              class="absolute -top-12 -right-4 sm:-top-16 sm:-right-8 w-24 h-24 sm:w-32 sm:h-32 border-4 border-black bg-white brutal-shadow rotate-6 overflow-hidden flex items-center justify-center z-20"
             >
-              Desarrollador Web <br /> & Animador 3D
+              <span
+                class="font-display font-black text-black text-xs sm:text-sm text-center leading-none"
+                >FOTO<br />AQUÍ</span
+              >
+              <!-- <img src="/tu-foto.jpg" alt="Michael" class="w-full h-full object-cover absolute inset-0"/> -->
+            </div>
+
+            <p
+              class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-black leading-tight uppercase relative z-10 pr-12"
+            >
+              Ingeniero en Diseño de Entretenimiento Digital
             </p>
             <p
               class="mt-6 text-lg sm:text-xl md:text-2xl font-body font-medium leading-relaxed"
@@ -103,27 +114,52 @@ import "../styles/global.css";
 
       <!-- Arsenal Section -->
       <section
-        class="py-16 md:py-24 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-8 items-center border-t-8 border-black pt-20 px-6 sm:px-12 md:px-20 lg:px-32"
+        class="py-16 md:py-24 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-12 items-start border-t-8 border-black pt-20 px-6 sm:px-12 md:px-20 lg:px-32"
       >
-        <div>
+        <div class="w-full relative z-10 overflow-hidden lg:overflow-visible">
           <h2
-            class="text-6xl md:text-8xl lg:text-9xl font-black mb-10 leading-none"
+            class="text-[14vw] sm:text-7xl md:text-8xl lg:text-9xl font-black mb-8 leading-none"
           >
             MI <br /> ARSENAL
           </h2>
-          <div class="flex flex-wrap gap-4">
+          <div class="flex flex-wrap gap-2 sm:gap-3 mb-16">
             {
               [
-                "THREE.JS",
-                "ASTRO",
-                "BLENDER",
-                "GSAP",
-                "TAILWIND",
-                "WEBGL",
-                "REACT",
-                "CÓDIGO CREATIVO",
+                { n: "Three.JS", c: "hover:bg-neo-blue" },
+                { n: "HTML", c: "hover:bg-neo-orange" },
+                { n: "CSS", c: "hover:bg-neo-blue" },
+                { n: "JS", c: "hover:bg-neo-green hover:text-black" },
+                { n: "Blender", c: "hover:bg-neo-orange" },
+                { n: "Maya", c: "hover:bg-neo-blue" },
+                { n: "Adobe Suite", c: "hover:bg-neo-pink" },
+                { n: "Office Suite", c: "hover:bg-neo-orange" },
+                { n: "Aseprite", c: "hover:bg-neo-blue" },
+                { n: "Unity", c: "hover:bg-black" },
+                { n: "Git/Github", c: "hover:bg-gray-800" },
+                { n: "IAs generativas", c: "hover:bg-neo-pink" },
               ].map((skill) => (
-                <span class="px-6 py-3 border-4 border-black bg-white font-display font-black text-lg md:text-xl uppercase brutal-shadow hover:bg-neo-blue hover:text-white transition-colors cursor-crosshair sound-hover">
+                <span
+                  class={`px-3 py-2 sm:px-5 sm:py-3 border-4 border-black bg-white font-display font-black text-xs sm:text-sm md:text-base uppercase brutal-shadow ${skill.c} hover:text-white transition-colors cursor-crosshair sound-hover`}
+                >
+                  {skill.n}
+                </span>
+              ))
+            }
+          </div>
+
+          <h3 class="text-3xl sm:text-4xl font-black mb-6 uppercase">
+            Habilidades Blandas
+          </h3>
+          <div class="flex flex-wrap gap-2 sm:gap-3">
+            {
+              [
+                "Resolución de problemas",
+                "Creatividad",
+                "Trabajo en equipo",
+                "Adaptabilidad",
+                "Comunicación asertiva",
+              ].map((skill) => (
+                <span class="px-3 py-2 sm:px-4 sm:py-2 border-4 border-black bg-neo-green font-display font-black text-xs sm:text-sm uppercase brutal-shadow hover:bg-black hover:text-white transition-colors cursor-crosshair sound-hover">
                   {skill}
                 </span>
               ))
@@ -131,9 +167,11 @@ import "../styles/global.css";
           </div>
         </div>
 
-        <div class="flex items-center justify-center lg:justify-end">
+        <div
+          class="flex flex-col items-center justify-start lg:justify-end gap-12 mt-4 lg:mt-0 w-full"
+        >
           <div
-            class="bg-neo-orange p-8 md:p-12 border-4 border-black brutal-shadow max-w-xl rotate-1"
+            class="bg-neo-orange p-6 sm:p-8 md:p-12 border-4 border-black brutal-shadow w-full max-w-xl rotate-1 transform-gpu z-0"
           >
             <h3 class="text-4xl md:text-5xl font-black mb-6">¿POR QUÉ YO?</h3>
             <p
@@ -172,27 +210,40 @@ import "../styles/global.css";
             >
             </div>
             <div
-              class="relative bg-white border-4 border-black p-8 h-80 flex flex-col justify-between transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2 overflow-hidden"
+              class="relative bg-white border-4 border-black p-6 sm:p-8 flex flex-col transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2 overflow-hidden min-h-[400px]"
             >
               <div
                 class="absolute -right-16 -top-16 w-56 h-56 bg-neo-green rounded-full opacity-60 blur-xl group-hover:blur-3xl transition-all duration-500 group-hover:scale-150"
               >
               </div>
-              <div class="flex justify-between items-start z-10 relative">
-                <h3 class="text-4xl font-black">DIMENSIOS</h3>
+
+              <!-- Mockup Image Slot -->
+              <div
+                class="w-full h-40 sm:h-48 border-4 border-black bg-gray-200 mb-6 flex items-center justify-center relative z-10 overflow-hidden"
+              >
+                <span
+                  class="font-display font-black text-gray-400 text-sm tracking-widest"
+                  >[ MOCKUP IMAGEN ]</span
+                >
+                <!-- <img src="/mockup-dimensios.jpg" alt="Dimensios" class="w-full h-full object-cover absolute inset-0" /> -->
+              </div>
+
+              <div class="flex justify-between items-start z-10 relative mb-4">
+                <h3 class="text-3xl sm:text-4xl font-black">DIMENSIOS</h3>
                 <span class="text-4xl">↗</span>
               </div>
               <div class="z-10 relative mt-auto">
                 <span
-                  class="bg-black text-white px-3 py-1 text-sm font-bold uppercase mb-2 inline-block"
+                  class="bg-black text-white px-3 py-1 text-xs sm:text-sm font-bold uppercase mb-2 inline-block"
                   >Three.js + React</span
                 >
-                <p class="font-body text-2xl font-bold">
+                <p class="font-body text-xl md:text-2xl font-bold">
                   Experiencia 3D Interactiva
                 </p>
               </div>
             </div>
           </a>
+
           <!-- Card 2 (Smog) -->
           <div class="group relative cursor-crosshair sound-hover">
             <div
@@ -200,23 +251,149 @@ import "../styles/global.css";
             >
             </div>
             <div
-              class="relative bg-white border-4 border-black p-8 h-80 flex flex-col justify-between transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2 overflow-hidden"
+              class="relative bg-white border-4 border-black p-6 sm:p-8 flex flex-col transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2 overflow-hidden min-h-[400px]"
             >
               <div
                 class="absolute -left-16 -bottom-16 w-56 h-56 bg-neo-orange rounded-none rotate-45 opacity-60 blur-xl group-hover:blur-3xl transition-all duration-500 group-hover:scale-150"
               >
               </div>
-              <h3 class="text-4xl font-black z-10 relative leading-tight">
+
+              <!-- Mockup Image Slot -->
+              <div
+                class="w-full h-40 sm:h-48 border-4 border-black bg-gray-200 mb-6 flex items-center justify-center relative z-10 overflow-hidden"
+              >
+                <span
+                  class="font-display font-black text-gray-400 text-sm tracking-widest"
+                  >[ MOCKUP IMAGEN ]</span
+                >
+              </div>
+
+              <h3
+                class="text-3xl sm:text-4xl font-black z-10 relative leading-tight mb-4"
+              >
                 LA VENGANZA <br />DEL SMOG
               </h3>
               <div class="z-10 relative mt-auto">
                 <span
-                  class="bg-black text-white px-3 py-1 text-sm font-bold uppercase mb-2 inline-block"
+                  class="bg-black text-white px-3 py-1 text-xs sm:text-sm font-bold uppercase mb-2 inline-block"
                   >Plataformero 2D / Pixel Art</span
                 >
                 <p class="font-body text-xl md:text-2xl font-bold">
                   Próximamente...
                 </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3 (A Medias) -->
+          <div class="group relative cursor-crosshair sound-hover">
+            <div
+              class="absolute inset-0 bg-neo-green border-4 border-black translate-x-4 translate-y-4 transition-transform group-hover:translate-x-8 group-hover:translate-y-8"
+            >
+            </div>
+            <div
+              class="relative bg-white border-4 border-black p-6 sm:p-8 flex flex-col transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2 overflow-hidden min-h-[400px]"
+            >
+              <!-- Mockup Image Slot -->
+              <div
+                class="w-full h-40 sm:h-48 border-4 border-black bg-gray-200 mb-6 flex items-center justify-center relative z-10 overflow-hidden"
+              >
+                <span
+                  class="font-display font-black text-gray-400 text-sm tracking-widest"
+                  >[ MOCKUP IMAGEN ]</span
+                >
+              </div>
+
+              <h3
+                class="text-3xl sm:text-4xl font-black z-10 relative leading-tight mb-4"
+              >
+                A MEDIAS
+              </h3>
+              <div class="z-10 relative mt-auto">
+                <span
+                  class="bg-black text-white px-3 py-1 text-xs sm:text-sm font-bold uppercase mb-2 inline-block"
+                  >VR / Interactivo</span
+                >
+                <p class="font-body text-xl md:text-2xl font-bold">
+                  Animación interactiva en Realidad Virtual
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 4 (Modelado 3D) -->
+          <div class="group relative cursor-crosshair sound-hover">
+            <div
+              class="absolute inset-0 bg-neo-orange border-4 border-black translate-x-4 translate-y-4 transition-transform group-hover:translate-x-8 group-hover:translate-y-8"
+            >
+            </div>
+            <div
+              class="relative bg-white border-4 border-black p-6 sm:p-8 flex flex-col transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2 overflow-hidden min-h-[400px]"
+            >
+              <!-- Mockup Image Slot -->
+              <div
+                class="w-full h-40 sm:h-48 border-4 border-black bg-gray-200 mb-6 flex items-center justify-center relative z-10 overflow-hidden"
+              >
+                <span
+                  class="font-display font-black text-gray-400 text-sm tracking-widest"
+                  >[ MOCKUP IMAGEN ]</span
+                >
+              </div>
+
+              <h3
+                class="text-3xl sm:text-4xl font-black z-10 relative leading-tight mb-4"
+              >
+                MODELADO 3D
+              </h3>
+              <div class="z-10 relative mt-auto">
+                <span
+                  class="bg-black text-white px-3 py-1 text-xs sm:text-sm font-bold uppercase mb-2 inline-block"
+                  >Blender / Maya</span
+                >
+                <p class="font-body text-xl md:text-2xl font-bold">
+                  Personajes, Props & Escenarios
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 5 (Animaciones) -->
+          <div
+            class="group relative cursor-crosshair sound-hover lg:col-span-2"
+          >
+            <div
+              class="absolute inset-0 bg-black border-4 border-black translate-x-4 translate-y-4 transition-transform group-hover:translate-x-8 group-hover:translate-y-8"
+            >
+            </div>
+            <div
+              class="relative bg-white border-4 border-black p-6 sm:p-8 flex flex-col md:flex-row gap-8 transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2 overflow-hidden min-h-[300px]"
+            >
+              <!-- Mockup Image Slot -->
+              <div
+                class="w-full md:w-1/2 h-48 md:h-full border-4 border-black bg-gray-200 flex items-center justify-center relative z-10 overflow-hidden"
+              >
+                <span
+                  class="font-display font-black text-gray-400 text-sm tracking-widest"
+                  >[ SHOWREEL ]</span
+                >
+              </div>
+
+              <div class="w-full md:w-1/2 flex flex-col justify-center">
+                <h3
+                  class="text-3xl sm:text-5xl font-black z-10 relative leading-tight mb-4 text-black"
+                >
+                  ANIMACIÓN GENERAL
+                </h3>
+                <div class="z-10 relative">
+                  <span
+                    class="bg-neo-green text-black border-2 border-black px-3 py-1 text-xs sm:text-sm font-bold uppercase mb-4 inline-block shadow-[2px_2px_0px_rgba(0,0,0,1)]"
+                    >Motion Graphics / 3D Animation</span
+                  >
+                  <p class="font-body text-xl md:text-2xl font-medium mt-2">
+                    Una colección de mis mejores piezas animadas, abarcando
+                    desde motion graphics limpios hasta simulaciones complejas.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
