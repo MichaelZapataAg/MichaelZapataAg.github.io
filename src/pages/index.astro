@@ -65,7 +65,7 @@ import aMediasImg from "../assets/images/AMediasPoster.jpeg";
           <!-- 3D Canvas Box -->
           <div
             id="canvas-container"
-            class="w-full lg:w-1/2 xl:w-7/12 h-[350px] sm:h-[450px] lg:h-[500px] cursor-crosshair init-animate flex justify-center items-center"
+            class="w-full lg:w-1/2 xl:w-7/12 h-[500px] sm:h-[650px] lg:h-[750px] cursor-crosshair init-animate flex justify-center items-center"
           >
             <canvas id="webgl" class="w-full h-full outline-none block"
             ></canvas>
@@ -100,7 +100,7 @@ import aMediasImg from "../assets/images/AMediasPoster.jpeg";
             <a
               href="#contacto"
               class="inline-block bg-black text-white w-max mt-8 px-8 py-4 font-display font-black text-lg md:text-xl border-4 border-black hover:bg-neo-blue hover:text-white hover:border-black transition-colors sound-hover"
-              >ESTABLECER CONTACTO →</a
+              >CONTACTAME →</a
             >
           </div>
         </div>
@@ -192,6 +192,17 @@ import aMediasImg from "../assets/images/AMediasPoster.jpeg";
           </div>
         </div>
       </section>
+
+      <!-- Second Marquee divider -->
+      <div
+        class="marquee-container rotate-2 z-20 brutal-shadow relative w-full overflow-hidden"
+      >
+        <div class="marquee-content text-black">
+          HARD SURFACE &nbsp; • &nbsp; REALIDAD VIRTUAL &nbsp; • &nbsp; DISEÑO
+          DE ENTORNOS &nbsp; • &nbsp; HARD SURFACE &nbsp; • &nbsp; REALIDAD
+          VIRTUAL &nbsp; • &nbsp; DISEÑO DE ENTORNOS &nbsp; • &nbsp;
+        </div>
+      </div>
 
       <!-- Playground Section -->
       <section
@@ -715,8 +726,8 @@ import aMediasImg from "../assets/images/AMediasPoster.jpeg";
       // ==============================
       // 🕹️ MODELO 3D ESTÁNDAR DE PRUEBA
       // ==============================
-      // Aumentado su tamaño a un radio de 3.5
-      const geometry = new THREE.IcosahedronGeometry(3.5, 0);
+      // Aumentado su tamaño a un radio de 3.2 para que no se corte
+      const geometry = new THREE.IcosahedronGeometry(3.2, 0);
 
       const model = new THREE.Mesh(geometry, materialSolid);
       const wireframe = new THREE.Mesh(geometry, material);
