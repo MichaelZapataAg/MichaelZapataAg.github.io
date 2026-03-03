@@ -12,7 +12,8 @@ import aMediasImg from "../assets/images/AMediasPoster.jpeg";
 <html lang="es">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>MICHAEL ZAPATA | CREATIVE DEVELOPER & 3D ARTIST</title>
   </head>
@@ -255,7 +256,15 @@ import aMediasImg from "../assets/images/AMediasPoster.jpeg";
                   <h3 class="text-3xl sm:text-4xl lg:text-5xl font-black">
                     DIMENSIOS
                   </h3>
-                  <span class="text-4xl hidden md:block">↗</span>
+                  <svg
+                    xmlns="http://www.svg.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    class="hidden md:block w-8 h-8 lg:w-12 lg:h-12 stroke-current stroke-[3] text-black"
+                  >
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke-linecap="square"
+                    ></path>
+                  </svg>
                 </div>
 
                 <p
@@ -313,11 +322,22 @@ import aMediasImg from "../assets/images/AMediasPoster.jpeg";
               <div
                 class="w-full md:w-1/2 lg:w-full xl:w-1/2 flex flex-col justify-center"
               >
-                <h3
-                  class="text-3xl sm:text-4xl font-black z-10 relative leading-tight mb-4"
+                <div
+                  class="flex justify-between items-start z-10 relative mb-4"
                 >
-                  LA VENGANZA <br />DEL SMOG
-                </h3>
+                  <h3 class="text-3xl sm:text-4xl font-black leading-tight">
+                    LA VENGANZA <br />DEL SMOG
+                  </h3>
+                  <svg
+                    xmlns="http://www.svg.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    class="hidden md:block w-8 h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12 stroke-current stroke-[3] text-black shrink-0"
+                  >
+                    <path d="M7 17L17 7M17 7H7M17 7V17" stroke-linecap="square"
+                    ></path>
+                  </svg>
+                </div>
                 <p
                   class="font-body text-base md:text-lg font-medium mb-6 relative z-10"
                 >
@@ -516,9 +536,18 @@ import aMediasImg from "../assets/images/AMediasPoster.jpeg";
               </span>
               HABLEMOS
               <span
-                class="text-[5vw] text-solid transition-transform group-hover:translate-x-4 group-hover:-translate-y-4"
-                >↗</span
+                class="w-[8vw] h-[8vw] max-w-[4rem] max-h-[4rem] min-w-[2rem] min-h-[2rem] text-solid transition-transform group-hover:translate-x-4 group-hover:-translate-y-4 flex items-center justify-center -ml-2 select-none"
               >
+                <svg
+                  xmlns="http://www.svg.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  class="w-full h-full stroke-current stroke-[3]"
+                >
+                  <path d="M6 18L18 6M18 6H6M18 6V18" stroke-linecap="square"
+                  ></path>
+                </svg>
+              </span>
             </a>
           </h2>
         </div>
