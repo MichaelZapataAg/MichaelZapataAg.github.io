@@ -1,0 +1,199 @@
+---
+
+---
+
+<div
+    class="relative w-full h-full flex items-center justify-center group"
+    id="three-scene-wrapper"
+>
+    <button
+        id="prev-model"
+        class="absolute left-0 md:left-2 z-20 w-10 h-10 md:w-12 md:h-12 bg-black text-white border-4 border-black font-display font-black flex items-center justify-center brutal-shadow hover:bg-neo-green hover:text-black transition-colors sound-hover opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+    >
+        &lt;
+    </button>
+
+    <div
+        id="canvas-container"
+        class="w-full h-full cursor-crosshair flex justify-center items-center"
+    >
+        <canvas id="webgl" class="w-full h-full outline-none block"></canvas>
+    </div>
+
+    <button
+        id="next-model"
+        class="absolute right-0 md:right-2 z-20 w-10 h-10 md:w-12 md:h-12 bg-black text-white border-4 border-black font-display font-black flex items-center justify-center brutal-shadow hover:bg-neo-green hover:text-black transition-colors sound-hover opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+    >
+        &gt;
+    </button>
+</div>
+
+<script>
+    import * as THREE from "three";
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const canvasContainer = document.querySelector("#canvas-container");
+    const canvas = document.querySelector("canvas#webgl") as HTMLCanvasElement;
+
+    if (canvasContainer && canvas) {
+        const scene = new THREE.Scene();
+
+        const camera = new THREE.PerspectiveCamera(
+            35,
+            canvasContainer.clientWidth / canvasContainer.clientHeight,
+            0.1,
+            100,
+        );
+        camera.position.z = 15;
+        scene.add(camera);
+
+        const material = new THREE.MeshBasicMaterial({
+            color: 0x000000,
+            wireframe: true,
+            wireframeLinewidth: 2,
+            transparent: true,
+            opacity: 0.15,
+        });
+
+        const materialSolid = new THREE.MeshStandardMaterial({
+            color: "#ff0055",
+            roughness: 0.2,
+            metalness: 0.8,
+        });
+
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+        const dirLight = new THREE.DirectionalLight(0xff0055, 2);
+        dirLight.position.set(5, 5, 5);
+        scene.add(dirLight);
+        const blueLight = new THREE.DirectionalLight(0x0033ff, 2);
+        blueLight.position.set(-5, -5, 2);
+        scene.add(blueLight);
+
+        const group = new THREE.Group();
+        scene.add(group);
+
+        // Dynamic Geometry Setup
+        const geometries = [
+            new THREE.IcosahedronGeometry(3.2, 0),
+            new THREE.TorusKnotGeometry(2, 0.6, 120, 32),
+            new THREE.BoxGeometry(3.5, 3.5, 3.5),
+            new THREE.OctahedronGeometry(3.5, 0),
+            new THREE.TetrahedronGeometry(4, 1),
+        ];
+        let currentIndex = 0;
+
+        const model = new THREE.Mesh(geometries[currentIndex], materialSolid);
+        const wireframe = new THREE.Mesh(geometries[currentIndex], material);
+        wireframe.scale.setScalar(1.02);
+        model.add(wireframe);
+
+        model.position.y -= 0.5;
+        group.add(model);
+
+        // Initial scale animation
+        gsap.from(group.scale, {
+            x: 0,
+            y: 0,
+            z: 0,
+            duration: 1.5,
+            ease: "elastic.out(1, 0.75)",
+            delay: 0.5,
+        });
+
+        // Arrow Nav Logic
+        const updateGeometry = () => {
+            gsap.to(model.scale, {
+                x: 0,
+                y: 0,
+                z: 0,
+                duration: 0.3,
+                ease: "back.in(1.5)",
+                onComplete: () => {
+                    model.geometry = geometries[currentIndex];
+                    wireframe.geometry = geometries[currentIndex];
+                    gsap.to(model.scale, {
+                        x: 1,
+                        y: 1,
+                        z: 1,
+                        duration: 0.8,
+                        ease: "elastic.out(1, 0.75)",
+                    });
+                },
+            });
+        };
+
+        document.getElementById("next-model")?.addEventListener("click", () => {
+            currentIndex = (currentIndex + 1) % geometries.length;
+            updateGeometry();
+        });
+
+        document.getElementById("prev-model")?.addEventListener("click", () => {
+            currentIndex =
+                (currentIndex - 1 + geometries.length) % geometries.length;
+            updateGeometry();
+        });
+
+        const renderer = new THREE.WebGLRenderer({
+            canvas: canvas,
+            alpha: true,
+            antialias: true,
+        });
+
+        const updateSize = () => {
+            if (!canvasContainer) return;
+            const width = canvasContainer.clientWidth;
+            const height = canvasContainer.clientHeight;
+            renderer.setSize(width, height);
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+        };
+
+        updateSize();
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        window.addEventListener("resize", updateSize);
+
+        const timer = new THREE.Clock();
+
+        let mouseX = 0;
+        let mouseY = 0;
+        let targetRotationX = 0;
+        let targetRotationY = 0;
+
+        window.addEventListener("mousemove", (event) => {
+            if (!canvasContainer) return;
+            mouseX = event.clientX / window.innerWidth - 0.5;
+            mouseY = event.clientY / window.innerHeight - 0.5;
+        });
+
+        const tick = () => {
+            const elapsedTime = timer.getElapsedTime();
+
+            targetRotationX += (mouseY * 2.5 - targetRotationX) * 0.05;
+            targetRotationY += (mouseX * 2.5 - targetRotationY) * 0.05;
+
+            group.rotation.y = elapsedTime * 0.15 + targetRotationY;
+            group.rotation.x = elapsedTime * 0.1 + targetRotationX;
+
+            group.position.y += Math.sin(elapsedTime) * 0.002;
+
+            renderer.render(scene, camera);
+            window.requestAnimationFrame(tick);
+        };
+        tick();
+
+        ScrollTrigger.create({
+            trigger: "body",
+            start: "top top",
+            end: "bottom bottom",
+            onUpdate: (self) => {
+                targetRotationY += self.getVelocity() / 25000;
+                targetRotationX += self.getVelocity() / 50000;
+            },
+        });
+    }
+</script>
