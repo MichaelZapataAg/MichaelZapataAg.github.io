@@ -14,12 +14,39 @@ export interface Props {
 }
 const { lang = "es" } = Astro.props;
 
+const SITE = "https://michaelzapataag.github.io";
+const pageUrl = lang === "es" ? `${SITE}/` : `${SITE}/en/`;
+const ogImage = `${SITE}/og-image.jpg`;
+const seoTitle = "Michael Zapata | Creative Frontend Developer & 3D";
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Michael Zapata",
+  url: SITE,
+  image: ogImage,
+  jobTitle: "Creative Frontend Developer",
+  email: "michael.zapata.ag@gmail.com",
+  sameAs: [
+    "https://www.linkedin.com/in/michaelzapataag/",
+    "https://github.com/MichaelZapataAg",
+    "https://sketchfab.com/MichaelZapataAg",
+  ],
+};
+
 const t = {
+  seo_desc: {
+    es: "Portafolio de Michael Zapata, creative frontend developer. Experiencias web interactivas y 3D en el navegador con React, Three.js y GSAP.",
+    en: "Portfolio of Michael Zapata, creative frontend developer. Interactive web and 3D browser experiences built with React, Three.js and GSAP.",
+  },
+  og_alt: {
+    es: "Michael Zapata, Creative Frontend Developer y artista 3D",
+    en: "Michael Zapata, Creative Frontend Developer and 3D artist",
+  },
   hi: { es: "HOLA, SOY", en: "HELLO, I'M" },
   portfolio: { es: "[ PORTAFOLIO ]", en: "[ PORTFOLIO ]" },
   job: {
-    es: "Ingeniero en Diseño de Entretenimiento Digital",
-    en: "Digital Entertainment Design Engineer",
+    es: "Creative Frontend Developer",
+    en: "Creative Frontend Developer",
   },
   desc: {
     es: "No te aburro con líneas genéricas, dejo que mis visuales hablen por mí. Código crudo, experiencias memorables y píxeles en tres dimensiones disparados al navegador.",
@@ -103,9 +130,47 @@ const t = {
 <html lang={lang}>
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>MICHAEL ZAPATA | CREATIVE DEVELOPER & 3D ARTIST</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+    <title>{seoTitle}</title>
+    <meta name="description" content={t.seo_desc[lang]} />
+    <meta name="author" content="Michael Zapata" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#EAE6DB" />
+    <link rel="canonical" href={pageUrl} />
+
+    <link rel="alternate" hreflang="es" href={`${SITE}/`} />
+    <link rel="alternate" hreflang="en" href={`${SITE}/en/`} />
+    <link rel="alternate" hreflang="x-default" href={`${SITE}/`} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Michael Zapata" />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:title" content={seoTitle} />
+    <meta property="og:description" content={t.seo_desc[lang]} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1920" />
+    <meta property="og:image:height" content="1080" />
+    <meta property="og:image:alt" content={t.og_alt[lang]} />
+    <meta property="og:locale" content={lang === "es" ? "es_CO" : "en_US"} />
+    <meta
+      property="og:locale:alternate"
+      content={lang === "es" ? "en_US" : "es_CO"}
+    />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={seoTitle} />
+    <meta name="twitter:description" content={t.seo_desc[lang]} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={t.og_alt[lang]} />
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(personSchema)}
+    />
   </head>
   <body class="bg-paper text-black">
     <!-- Language Switch -->
@@ -511,17 +576,22 @@ const t = {
           <div class="flex flex-wrap gap-2 sm:gap-3 mb-16">
             {
               [
-                { n: "Three.JS", c: "hover:bg-neo-blue" },
+                { n: "JavaScript", c: "hover:bg-neo-green hover:text-black" },
+                { n: "TypeScript", c: "hover:bg-neo-blue" },
+                { n: "React", c: "hover:bg-neo-blue" },
+                { n: "React Three Fiber", c: "hover:bg-neo-pink" },
+                { n: "Three.js", c: "hover:bg-neo-blue" },
+                { n: "GSAP", c: "hover:bg-neo-green hover:text-black" },
+                { n: "Astro", c: "hover:bg-neo-orange" },
+                { n: "Tailwind CSS", c: "hover:bg-neo-blue" },
                 { n: "HTML", c: "hover:bg-neo-orange" },
                 { n: "CSS", c: "hover:bg-neo-blue" },
-                { n: "JS", c: "hover:bg-neo-green hover:text-black" },
                 { n: "Blender", c: "hover:bg-neo-orange" },
                 { n: "Maya", c: "hover:bg-neo-blue" },
-                { n: "Adobe Suite", c: "hover:bg-neo-pink" },
-                { n: "Office Suite", c: "hover:bg-neo-orange" },
-                { n: "Aseprite", c: "hover:bg-neo-blue" },
                 { n: "Unity", c: "hover:bg-black" },
-                { n: "Git/Github", c: "hover:bg-gray-800" },
+                { n: "Aseprite", c: "hover:bg-neo-pink" },
+                { n: "Adobe Suite", c: "hover:bg-neo-pink" },
+                { n: "Git/GitHub", c: "hover:bg-gray-800" },
                 { n: "IAs generativas", c: "hover:bg-neo-pink" },
               ].map((skill) => (
                 <span
