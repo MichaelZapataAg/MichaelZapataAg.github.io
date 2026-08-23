@@ -96,6 +96,24 @@ h6 {
   -webkit-text-stroke: 0px transparent;
 }
 
+/* Respeta la preferencia de menos movimiento del sistema */
+@media (prefers-reduced-motion: reduce) {
+  html,
+  body {
+    scroll-behavior: auto;
+  }
+
+  .marquee-content {
+    animation: none;
+  }
+
+  .brutal-shadow,
+  .brutal-shadow:hover {
+    transition: none;
+    transform: none;
+  }
+}
+
 /* Static Noise Overlay */
 .noise-overlay {
   position: fixed;

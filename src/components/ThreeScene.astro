@@ -8,7 +8,8 @@
 >
     <button
         id="prev-model"
-        class="absolute left-0 md:left-2 z-20 w-10 h-10 md:w-12 md:h-12 bg-black text-white border-4 border-black font-display font-black flex items-center justify-center brutal-shadow hover:bg-neo-green hover:text-black transition-colors sound-hover opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+        aria-label="Modelo anterior"
+        class="absolute left-0 md:left-2 z-20 w-10 h-10 md:w-12 md:h-12 bg-black text-white border-4 border-black font-display font-black flex items-center justify-center brutal-shadow hover:bg-neo-green hover:text-black transition-colors sound-hover opacity-100 md:opacity-0 md:group-hover:opacity-100 md:focus-visible:opacity-100 transition-opacity cursor-pointer"
     >
         &lt;
     </button>
@@ -22,7 +23,8 @@
 
     <button
         id="next-model"
-        class="absolute right-0 md:right-2 z-20 w-10 h-10 md:w-12 md:h-12 bg-black text-white border-4 border-black font-display font-black flex items-center justify-center brutal-shadow hover:bg-neo-green hover:text-black transition-colors sound-hover opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+        aria-label="Modelo siguiente"
+        class="absolute right-0 md:right-2 z-20 w-10 h-10 md:w-12 md:h-12 bg-black text-white border-4 border-black font-display font-black flex items-center justify-center brutal-shadow hover:bg-neo-green hover:text-black transition-colors sound-hover opacity-100 md:opacity-0 md:group-hover:opacity-100 md:focus-visible:opacity-100 transition-opacity cursor-pointer"
     >
         &gt;
     </button>
@@ -37,6 +39,9 @@
 
     const canvasContainer = document.querySelector("#canvas-container");
     const canvas = document.querySelector("canvas#webgl") as HTMLCanvasElement;
+    const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+    ).matches;
 
     if (canvasContainer && canvas) {
         const scene = new THREE.Scene();
@@ -95,17 +100,25 @@
         group.add(model);
 
         // Initial scale animation
-        gsap.from(group.scale, {
-            x: 0,
-            y: 0,
-            z: 0,
-            duration: 1.5,
-            ease: "elastic.out(1, 0.75)",
-            delay: 0.5,
-        });
+        if (!reduceMotion) {
+            gsap.from(group.scale, {
+                x: 0,
+                y: 0,
+                z: 0,
+                duration: 1.5,
+                ease: "elastic.out(1, 0.75)",
+                delay: 0.5,
+            });
+        }
 
         // Arrow Nav Logic
         const updateGeometry = () => {
+            if (reduceMotion) {
+                model.geometry = geometries[currentIndex];
+                wireframe.geometry = geometries[currentIndex];
+                renderer.render(scene, camera);
+                return;
+            }
             gsap.to(model.scale, {
                 x: 0,
                 y: 0,
@@ -150,6 +163,7 @@
             renderer.setSize(width, height);
             camera.aspect = width / height;
             camera.updateProjectionMatrix();
+            if (reduceMotion) renderer.render(scene, camera);
         };
 
         updateSize();
@@ -157,43 +171,74 @@
 
         window.addEventListener("resize", updateSize);
 
-        const timer = new THREE.Clock();
-
-        let mouseX = 0;
-        let mouseY = 0;
-        let targetRotationX = 0;
-        let targetRotationY = 0;
-
-        window.addEventListener("mousemove", (event) => {
-            if (!canvasContainer) return;
-            mouseX = event.clientX / window.innerWidth - 0.5;
-            mouseY = event.clientY / window.innerHeight - 0.5;
-        });
-
-        const tick = () => {
-            const elapsedTime = timer.getElapsedTime();
-
-            targetRotationX += (mouseY * 2.5 - targetRotationX) * 0.05;
-            targetRotationY += (mouseX * 2.5 - targetRotationY) * 0.05;
-
-            group.rotation.y = elapsedTime * 0.15 + targetRotationY;
-            group.rotation.x = elapsedTime * 0.1 + targetRotationX;
-
-            group.position.y += Math.sin(elapsedTime) * 0.002;
-
+        if (reduceMotion) {
+            // Pose estática legible; sin loop de animación
+            group.rotation.set(0.35, 0.6, 0);
             renderer.render(scene, camera);
-            window.requestAnimationFrame(tick);
-        };
-        tick();
+        } else {
+            const timer = new THREE.Clock();
+            let animTime = 0;
 
-        ScrollTrigger.create({
-            trigger: "body",
-            start: "top top",
-            end: "bottom bottom",
-            onUpdate: (self) => {
-                targetRotationY += self.getVelocity() / 25000;
-                targetRotationX += self.getVelocity() / 50000;
-            },
-        });
+            let mouseX = 0;
+            let mouseY = 0;
+            let targetRotationX = 0;
+            let targetRotationY = 0;
+
+            window.addEventListener("mousemove", (event) => {
+                if (!canvasContainer) return;
+                mouseX = event.clientX / window.innerWidth - 0.5;
+                mouseY = event.clientY / window.innerHeight - 0.5;
+            });
+
+            let rafId = 0;
+            let running = false;
+
+            const tick = () => {
+                animTime += timer.getDelta();
+
+                targetRotationX += (mouseY * 2.5 - targetRotationX) * 0.05;
+                targetRotationY += (mouseX * 2.5 - targetRotationY) * 0.05;
+
+                group.rotation.y = animTime * 0.15 + targetRotationY;
+                group.rotation.x = animTime * 0.1 + targetRotationX;
+
+                group.position.y += Math.sin(animTime) * 0.002;
+
+                renderer.render(scene, camera);
+                rafId = window.requestAnimationFrame(tick);
+            };
+
+            const start = () => {
+                if (running) return;
+                running = true;
+                timer.getDelta(); // descarta el tiempo pausado
+                rafId = window.requestAnimationFrame(tick);
+            };
+            const stop = () => {
+                if (!running) return;
+                running = false;
+                window.cancelAnimationFrame(rafId);
+            };
+
+            // Pausa el render cuando la escena sale del viewport
+            const wrapper = document.querySelector("#three-scene-wrapper");
+            if (wrapper && "IntersectionObserver" in window) {
+                new IntersectionObserver(([entry]) =>
+                    entry.isIntersecting ? start() : stop(),
+                ).observe(wrapper);
+            } else {
+                start();
+            }
+
+            ScrollTrigger.create({
+                trigger: "body",
+                start: "top top",
+                end: "bottom bottom",
+                onUpdate: (self) => {
+                    targetRotationY += self.getVelocity() / 25000;
+                    targetRotationX += self.getVelocity() / 50000;
+                },
+            });
+        }
     }
 </script>

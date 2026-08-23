@@ -123,6 +123,27 @@ const t = {
   lets_talk: { es: "HABLEMOS", en: "LET'S TALK" },
   made_with: { es: "HECHO CON", en: "MADE WITH" },
   attitude: { es: "ACTITUD", en: "ATTITUDE" },
+  cv_btn: { es: "DESCARGAR CV", en: "DOWNLOAD CV (ES)" },
+  sound_toggle_label: {
+    es: "Activar o silenciar los efectos de sonido",
+    en: "Toggle sound effects on or off",
+  },
+  alt_maik: {
+    es: "Retrato de Michael Zapata",
+    en: "Portrait of Michael Zapata",
+  },
+  alt_dimensios: {
+    es: "Mockup del proyecto Dimensios, experiencia web 3D interactiva",
+    en: "Mockup of Dimensios, an interactive 3D web experience",
+  },
+  alt_smog: {
+    es: "Póster pixel art del videojuego La Venganza del Smog",
+    en: "Pixel art poster of the video game La Venganza del Smog",
+  },
+  alt_amedias: {
+    es: "Póster de A Medias, animación interactiva en realidad virtual",
+    en: "Poster of A Medias, an interactive virtual reality animation",
+  },
 };
 ---
 
@@ -186,6 +207,13 @@ const t = {
         href="/en/"
         class={`px-3 py-1 font-display font-black text-sm uppercase ${lang === "en" ? "bg-black text-white" : "hover:bg-neo-pink transition-colors text-black"}`}
         >EN</a
+      >
+      <button
+        id="sound-toggle"
+        aria-label={t.sound_toggle_label[lang]}
+        aria-pressed="true"
+        class="px-3 py-1 font-display font-black text-sm uppercase border-l-4 border-black hover:bg-neo-green transition-colors text-black cursor-pointer"
+        >♪</button
       >
     </div>
 
@@ -251,7 +279,7 @@ const t = {
             >
               <Image
                 src={maikImg}
-                alt="Michael"
+                alt={t.alt_maik[lang]}
                 class="w-full h-full object-cover absolute inset-0"
               />
             </div>
@@ -327,7 +355,7 @@ const t = {
               >
                 <Image
                   src={dimensioImg}
-                  alt="Dimensios"
+                  alt={t.alt_dimensios[lang]}
                   class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
@@ -397,7 +425,7 @@ const t = {
               >
                 <Image
                   src={smogImg}
-                  alt="Smog"
+                  alt={t.alt_smog[lang]}
                   class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
@@ -461,7 +489,7 @@ const t = {
               >
                 <Image
                   src={aMediasImg}
-                  alt="A Medias VR"
+                  alt={t.alt_amedias[lang]}
                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
@@ -735,6 +763,12 @@ const t = {
             class="px-5 py-3 border-4 border-black bg-white font-display font-black text-sm md:text-lg uppercase brutal-shadow hover:bg-neo-orange hover:text-white transition-colors cursor-crosshair"
             >Sketchfab</a
           >
+          <a
+            href="/cv-michael-zapata.pdf"
+            download
+            class="px-5 py-3 border-4 border-black bg-neo-green font-display font-black text-sm md:text-lg uppercase brutal-shadow hover:bg-black hover:text-white transition-colors cursor-crosshair"
+            >{t.cv_btn[lang]} ↓</a
+          >
         </div>
 
         <p class="font-body font-bold text-xl uppercase tracking-wider">
@@ -753,14 +787,34 @@ const t = {
 
       gsap.registerPlugin(ScrollTrigger);
 
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
       /**============================================
        * AUDIO FEEDBACK
        *=============================================**/
       const AudioContext =
         window.AudioContext || (window as any).webkitAudioContext;
       let audioCtx: AudioContext | null = null;
+      let soundMuted = localStorage.getItem("soundMuted") === "1";
+
+      const soundToggle = document.getElementById("sound-toggle");
+      const updateSoundToggle = () => {
+        if (!soundToggle) return;
+        soundToggle.textContent = soundMuted ? "×" : "♪";
+        soundToggle.setAttribute("aria-pressed", String(!soundMuted));
+        soundToggle.classList.toggle("opacity-40", soundMuted);
+      };
+      updateSoundToggle();
+      soundToggle?.addEventListener("click", () => {
+        soundMuted = !soundMuted;
+        localStorage.setItem("soundMuted", soundMuted ? "1" : "0");
+        updateSoundToggle();
+      });
 
       const playBoop = async () => {
+        if (soundMuted) return;
         if (!audioCtx) return; // Prevent errors if context wasn't created properly
 
         if (audioCtx.state === "suspended") await audioCtx.resume();
@@ -802,7 +856,7 @@ const t = {
        * INTERACTIVE MAGNETIC PORTFOLIO TEXT
        *=============================================**/
       const badge = document.querySelector(".portfolio-badge");
-      if (badge) {
+      if (badge && !prefersReducedMotion) {
         badge.addEventListener("mousemove", (e: any) => {
           const rect = badge.getBoundingClientRect();
           const x = e.clientX - rect.left - rect.width / 2;
@@ -832,6 +886,7 @@ const t = {
       );
       nameHoverElements.forEach((el) => {
         el.addEventListener("mouseenter", () => {
+          if (prefersReducedMotion) return;
           gsap.to(el, {
             x: () => (Math.random() - 0.5) * 20,
             y: () => (Math.random() - 0.5) * 20,
@@ -844,7 +899,7 @@ const t = {
             },
           });
 
-          if (audioCtx && audioCtx.state === "running") {
+          if (!soundMuted && audioCtx && audioCtx.state === "running") {
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
             osc.type = "sawtooth";
@@ -870,32 +925,37 @@ const t = {
        * GSAP UI ANIMATIONS
        *=============================================**/
       // Initial Load Animation
-      const tl = gsap.timeline();
+      if (prefersReducedMotion) {
+        // Sin animación de entrada: solo asegura visibilidad
+        gsap.set([".title-animate", ".init-animate"], { opacity: 1 });
+      } else {
+        const tl = gsap.timeline();
 
-      tl.from(".title-animate", {
-        y: 50,
-        opacity: 0,
-        duration: 1,
-        ease: "power4.out",
-        delay: 0.2,
-      }).fromTo(
-        ".init-animate",
-        {
-          scale: 0.8,
-          rotation: -10,
+        tl.from(".title-animate", {
+          y: 50,
           opacity: 0,
-        },
-        {
-          scale: 1,
-          rotation: 0, // Reset to inline block natural rotation or keep existing base. For the rotated box we might need from() without rotation if it breaks it, let's use a clear fromTo to keep opacity stable.
-          opacity: 1,
-          clearProps: "scale,rotation",
-          duration: 0.8,
-          stagger: 0.2,
-          ease: "back.out(1.5)",
-        },
-        "-=0.5",
-      );
+          duration: 1,
+          ease: "power4.out",
+          delay: 0.2,
+        }).fromTo(
+          ".init-animate",
+          {
+            scale: 0.8,
+            rotation: -10,
+            opacity: 0,
+          },
+          {
+            scale: 1,
+            rotation: 0, // Reset to inline block natural rotation or keep existing base. For the rotated box we might need from() without rotation if it breaks it, let's use a clear fromTo to keep opacity stable.
+            opacity: 1,
+            clearProps: "scale,rotation",
+            duration: 0.8,
+            stagger: 0.2,
+            ease: "back.out(1.5)",
+          },
+          "-=0.5",
+        );
+      }
     </script>
   </body>
 </html>
