@@ -8,6 +8,8 @@ import dimensioImg from "../assets/images/MockupDimensio.png";
 import smogImg from "../assets/images/PosterSmog.png";
 import aMediasImg from "../assets/images/AMediasPoster.jpeg";
 import demoReel from "../assets/videos/DemoReelSimple.mp4";
+import kashSmashImg from "../assets/images/KashSmashCard.png";
+import deadHeatImg from "../assets/images/DeadHeatTile.png";
 
 export interface Props {
   lang: "es" | "en";
@@ -139,6 +141,28 @@ const t = {
   cherries_iframe_title: {
     es: "Visor 3D de Still Life Cherries en Sketchfab",
     en: "Still Life Cherries 3D viewer on Sketchfab",
+  },
+  slot_tag: { es: "Slot / Stake Engine", en: "Slot / Stake Engine" },
+  games_credit: {
+    es: "Hecho en Samsa Studio · Publicado por Lucky Bastards Studio en Stake",
+    en: "Made at Samsa Studio · Published by Lucky Bastards Studio on Stake",
+  },
+  kash_desc: {
+    es: "Slot 6×5 cluster pays publicada en Stake. Desarrollé el juego completo: frontend en PixiJS + Svelte y backend matemático en Python (motor de pagos, simulación y certificación sobre Stake Engine), sobre el arte del equipo del estudio.",
+    en: "6×5 cluster-pays slot published on Stake. I developed the entire game: PixiJS + Svelte frontend and Python math backend (payout engine, simulation and certification on Stake Engine), on top of the studio team's art.",
+  },
+  dead_desc: {
+    es: "Slot de basketball callejero 6×4 con cluster pays, tumbles y multiplicadores en escalera hasta 200x. Igual que en Kash Smash, fui el desarrollador: frontend y backend completos sobre Stake Engine, con el arte del equipo del estudio.",
+    en: "Street-basketball 6×4 cluster-pays slot with tumbles and a multiplier ladder up to 200x. As with Kash Smash, I was the developer: full frontend and backend on Stake Engine, with the studio team's art.",
+  },
+  play_stake: { es: "Jugarlo en Stake", en: "Play it on Stake" },
+  alt_kash: {
+    es: "Kash, el gorila de Kash Smash, con su bate frente a la bóveda llena de oro",
+    en: "Kash, the Kash Smash gorilla, holding his bat in front of the gold-filled vault",
+  },
+  alt_dead: {
+    es: "Tile oficial de Dead Heat: Bluff gritando con un balón de basketball",
+    en: "Official Dead Heat tile: Bluff screaming while holding a basketball",
   },
   lets_talk: { es: "HABLEMOS", en: "LET'S TALK" },
   made_with: { es: "HECHO CON", en: "MADE WITH" },
@@ -626,6 +650,122 @@ const t = {
               </div>
             </div>
           </div>
+
+          <!-- Card 6 (Kash Smash) -->
+          <a
+            href="https://stake.com/casino/games/luckybastardsstudio-kash-smash"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="block group relative cursor-crosshair sound-hover"
+          >
+            <div
+              class="absolute inset-0 bg-neo-green border-4 border-black translate-x-4 translate-y-4 transition-transform group-hover:translate-x-8 group-hover:translate-y-8"
+            >
+            </div>
+            <div
+              class="relative bg-white border-4 border-black p-6 sm:p-8 flex flex-col md:flex-row lg:flex-col gap-8 transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2 overflow-hidden h-full"
+            >
+              <div
+                class="w-full md:w-1/2 lg:w-full aspect-[3/4] self-center border-4 border-black bg-white relative z-10 overflow-hidden group"
+              >
+                <Image
+                  src={kashSmashImg}
+                  alt={t.alt_kash[lang]}
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div class="w-full md:w-1/2 lg:w-full flex flex-col justify-center">
+                <div class="flex justify-between items-start z-10 relative mb-4">
+                  <h3 class="text-3xl sm:text-4xl font-black leading-tight">
+                    KASH SMASH:<br />THE VAULT
+                  </h3>
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="hidden md:block w-8 h-8 lg:w-10 lg:h-10 fill-current text-black shrink-0"
+                  >
+                    <path
+                      d="M14 2H5.50003L4.00003 3.5L6.83581 6.33579L0.585815 12.5858L3.41424 15.4142L9.66424 9.16421L12.5 12L14 10.5L14 2Z"
+                      fill="currentColor"></path>
+                  </svg>
+                </div>
+                <p class="font-body text-base md:text-lg font-medium mb-6 relative z-10">
+                  {t.kash_desc[lang]}
+                </p>
+                <div class="z-10 relative mt-auto">
+                  <span
+                    class="bg-black text-white px-3 py-1 text-xs sm:text-sm font-bold uppercase mb-2 inline-block"
+                    >{t.slot_tag[lang]}</span
+                  >
+                  <p class="font-body text-xl md:text-2xl font-bold">
+                    {t.play_stake[lang]}
+                  </p>
+                  <p class="font-body text-xs md:text-sm font-medium mt-2 opacity-70">
+                    {t.games_credit[lang]}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <!-- Card 7 (Dead Heat) -->
+          <a
+            href="https://stake.com/casino/games/luckybastardsstudio-dead-heat"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="block group relative cursor-crosshair sound-hover"
+          >
+            <div
+              class="absolute inset-0 bg-neo-blue border-4 border-black translate-x-4 translate-y-4 transition-transform group-hover:translate-x-8 group-hover:translate-y-8"
+            >
+            </div>
+            <div
+              class="relative bg-white border-4 border-black p-6 sm:p-8 flex flex-col md:flex-row lg:flex-col gap-8 transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2 overflow-hidden h-full"
+            >
+              <div
+                class="w-full md:w-1/2 lg:w-full aspect-[446/599] self-center border-4 border-black bg-white relative z-10 overflow-hidden group"
+              >
+                <Image
+                  src={deadHeatImg}
+                  alt={t.alt_dead[lang]}
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div class="w-full md:w-1/2 lg:w-full flex flex-col justify-center">
+                <div class="flex justify-between items-start z-10 relative mb-4">
+                  <h3 class="text-3xl sm:text-4xl font-black leading-tight">
+                    DEAD HEAT
+                  </h3>
+                  <svg
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="hidden md:block w-8 h-8 lg:w-10 lg:h-10 fill-current text-black shrink-0"
+                  >
+                    <path
+                      d="M14 2H5.50003L4.00003 3.5L6.83581 6.33579L0.585815 12.5858L3.41424 15.4142L9.66424 9.16421L12.5 12L14 10.5L14 2Z"
+                      fill="currentColor"></path>
+                  </svg>
+                </div>
+                <p class="font-body text-base md:text-lg font-medium mb-6 relative z-10">
+                  {t.dead_desc[lang]}
+                </p>
+                <div class="z-10 relative mt-auto">
+                  <span
+                    class="bg-black text-white px-3 py-1 text-xs sm:text-sm font-bold uppercase mb-2 inline-block"
+                    >{t.slot_tag[lang]}</span
+                  >
+                  <p class="font-body text-xl md:text-2xl font-bold">
+                    {t.play_stake[lang]}
+                  </p>
+                  <p class="font-body text-xs md:text-sm font-medium mt-2 opacity-70">
+                    {t.games_credit[lang]}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </a>
         </div>
       </section>
 
