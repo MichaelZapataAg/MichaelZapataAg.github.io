@@ -187,15 +187,6 @@
             fragmentShader: FRAGMENT_SHADER,
         });
 
-        // Luces: el shader las ignora, pero el modelo GLB sí las necesita
-        scene.add(new THREE.AmbientLight(0xffffff, 1.4));
-        const keyLight = new THREE.DirectionalLight(0xffffff, 2.2);
-        keyLight.position.set(5, 8, 6);
-        scene.add(keyLight);
-        const fillLight = new THREE.DirectionalLight(0xffccdd, 0.9);
-        fillLight.position.set(-6, 2, -4);
-        scene.add(fillLight);
-
         const group = new THREE.Group();
         scene.add(group);
 
@@ -337,35 +328,7 @@
             updateGeometry();
         });
 
-        /**============================================
-         * MODELO GLB — bodegón de cerezas (carga diferida
-         * para no competir con el primer render)
-         *=============================================**/
-        setTimeout(() => {
-            import("three/addons/loaders/GLTFLoader.js")
-                .then(({ GLTFLoader }) =>
-                    new GLTFLoader().loadAsync("/models/cerezas.glb"),
-                )
-                .then((gltf) => {
-                    const obj = gltf.scene;
-                    // Se conserva el fondo pintado: se presenta como diorama,
-                    // igual que en Sketchfab
-                    const box = new THREE.Box3().setFromObject(obj);
-                    obj.position.sub(box.getCenter(new THREE.Vector3()));
-                    const size = box.getSize(new THREE.Vector3());
-                    const wrap = new THREE.Group();
-                    wrap.add(obj);
-                    wrap.scale.setScalar(8.5 / Math.max(size.x, size.y, size.z));
-                    wrap.rotation.y = 0.35; // tres cuartos, como el preview de Sketchfab
-                    wrap.rotation.x = 0.3; // inclina el diorama hacia la cámara
-                    wrap.visible = false;
-                    stage.add(wrap);
-                    shapes.push({ object: wrap });
-                })
-                .catch(() => {}); // sin el modelo, la escena sigue igual
-        }, 2500);
-
-        const renderer = new THREE.WebGLRenderer({
+const renderer = new THREE.WebGLRenderer({
             canvas: canvas,
             alpha: true,
             antialias: true,
@@ -416,17 +379,8 @@
                 targetRotationX += (mouseY * 2.5 - targetRotationX) * 0.05;
                 targetRotationY += (mouseX * 2.5 - targetRotationY) * 0.05;
 
-                // El diorama GLB no gira 360° (se vería el fondo hueco por
-                // detrás): vaivén suave de vitrina + parallax del mouse
-                const isModel = !!shapes[currentIndex]?.object;
-                if (isModel) {
-                    group.rotation.y =
-                        Math.sin(animTime * 0.4) * 0.18 + targetRotationY * 0.35;
-                    group.rotation.x = targetRotationX * 0.25;
-                } else {
-                    group.rotation.y = animTime * 0.15 + targetRotationY;
-                    group.rotation.x = animTime * 0.1 + targetRotationX;
-                }
+                group.rotation.y = animTime * 0.15 + targetRotationY;
+                group.rotation.x = animTime * 0.1 + targetRotationX;
 
                 group.position.y += Math.sin(animTime) * 0.002;
 

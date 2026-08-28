@@ -123,6 +123,23 @@ const t = {
     es: "Una colección con algunas de mis piezas animadas. El carrete abarca un rango técnico diverso que va desde lip syncs y walk cycles estructurados, hasta simulaciones tridimensionales fluidas.",
     en: "A collection featuring some of my animated pieces. The reel spans a diverse technical range, from structured lip syncs and walk cycles, to fluid three-dimensional simulations.",
   },
+  cherries_title: {
+    es: "STILL LIFE <br />CHERRIES",
+    en: "STILL LIFE <br />CHERRIES",
+  },
+  cherries_tags: {
+    es: "Modelado 3D / Blender",
+    en: "3D Modeling / Blender",
+  },
+  cherries_desc: {
+    es: "Bodegón modelado en Blender con texturas pintadas a mano. Este es el visor real de Sketchfab: gíralo, haz zoom e inspecciona la malla y los materiales directamente aquí.",
+    en: "Still life modeled in Blender with hand-painted textures. This is the actual Sketchfab viewer: orbit it, zoom in, and inspect the mesh and materials right here.",
+  },
+  cherries_link: { es: "Ver en Sketchfab →", en: "View on Sketchfab →" },
+  cherries_iframe_title: {
+    es: "Visor 3D de Still Life Cherries en Sketchfab",
+    en: "Still Life Cherries 3D viewer on Sketchfab",
+  },
   lets_talk: { es: "HABLEMOS", en: "LET'S TALK" },
   made_with: { es: "HECHO CON", en: "MADE WITH" },
   attitude: { es: "ACTITUD", en: "ATTITUDE" },
@@ -552,6 +569,59 @@ const t = {
                   <p class="font-body text-xl md:text-2xl font-medium mt-2">
                     {t.animation_desc[lang]}
                   </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 5 (Still Life Cherries — embed de Sketchfab) -->
+          <div class="group relative cursor-crosshair lg:col-span-2">
+            <div
+              class="absolute inset-0 bg-neo-orange border-4 border-black translate-x-4 translate-y-4 transition-transform group-hover:translate-x-8 group-hover:translate-y-8"
+            >
+            </div>
+            <div
+              class="relative bg-white border-4 border-black p-6 sm:p-8 flex flex-col md:flex-row gap-8 transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2 overflow-hidden min-h-[400px]"
+            >
+              <!-- Visor de Sketchfab -->
+              <div
+                class="w-full md:w-1/2 aspect-video self-center border-4 border-black bg-black relative z-10 overflow-hidden"
+              >
+                <iframe
+                  title={t.cherries_iframe_title[lang]}
+                  class="absolute inset-0 w-full h-full"
+                  frameborder="0"
+                  loading="lazy"
+                  allowfullscreen
+                  allow="autoplay; fullscreen; xr-spatial-tracking"
+                  src="https://sketchfab.com/models/4cd3f3c0ef7246258cda85098131a4f6/embed"
+                ></iframe>
+              </div>
+
+              <div class="w-full md:w-1/2 flex flex-col justify-center">
+                <div class="flex justify-between items-start z-10 relative mb-4">
+                  <h3
+                    class="text-3xl sm:text-4xl lg:text-5xl font-black leading-tight"
+                    set:html={t.cherries_title[lang]}
+                  />
+                </div>
+                <p
+                  class="font-body text-lg md:text-xl font-medium mb-6 relative z-10"
+                >
+                  {t.cherries_desc[lang]}
+                </p>
+                <div class="z-10 relative mt-auto">
+                  <span
+                    class="bg-black text-white px-3 py-1 text-xs sm:text-sm font-bold uppercase mb-2 inline-block"
+                    >{t.cherries_tags[lang]}</span
+                  >
+                  <a
+                    href="https://sketchfab.com/3d-models/still-life-cherries-blender-4cd3f3c0ef7246258cda85098131a4f6"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="font-body text-xl md:text-2xl font-bold block hover:text-neo-orange transition-colors sound-hover"
+                    >{t.cherries_link[lang]}</a
+                  >
                 </div>
               </div>
             </div>
