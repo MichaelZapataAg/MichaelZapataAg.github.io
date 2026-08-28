@@ -187,12 +187,27 @@
             fragmentShader: FRAGMENT_SHADER,
         });
 
+        // Luces: el shader las ignora, pero el modelo GLB sí las necesita
+        scene.add(new THREE.AmbientLight(0xffffff, 1.4));
+        const keyLight = new THREE.DirectionalLight(0xffffff, 2.2);
+        keyLight.position.set(5, 8, 6);
+        scene.add(keyLight);
+        const fillLight = new THREE.DirectionalLight(0xffccdd, 0.9);
+        fillLight.position.set(-6, 2, -4);
+        scene.add(fillLight);
+
         const group = new THREE.Group();
         scene.add(group);
 
+        // El "escenario" es lo que escala al cambiar de forma
+        // (mesh procedural o modelo GLB)
+        const stage = new THREE.Group();
+        stage.position.y -= 0.5;
+        group.add(stage);
+
         // Formas de alta densidad para que el shader tenga vértices que retorcer.
         // Cada una con su propia amplitud: el blob aguanta más distorsión que el nudo.
-        const shapes = [
+        const shapes: any[] = [
             { geo: new THREE.IcosahedronGeometry(3.2, 48), amp: 0.85 },
             { geo: new THREE.TorusKnotGeometry(2, 0.62, 300, 48), amp: 0.3 },
             { geo: new THREE.OctahedronGeometry(3.5, 24), amp: 0.55 },
@@ -201,8 +216,7 @@
         let currentIndex = 0;
 
         const model = new THREE.Mesh(shapes[currentIndex].geo, shaderMaterial);
-        model.position.y -= 0.5;
-        group.add(model);
+        stage.add(model);
 
         /**============================================
          * PARTÍCULAS — cuadros crudos en la paleta neo
@@ -271,26 +285,37 @@
         }
 
         // Arrow Nav Logic
+        const applyShape = () => {
+            const shape = shapes[currentIndex];
+            shapes.forEach((s) => {
+                if (s.object) s.object.visible = false;
+            });
+            if (shape.object) {
+                model.visible = false;
+                shape.object.visible = true;
+            } else {
+                model.visible = true;
+                model.geometry = shape.geo;
+                if (reduceMotion) uniforms.uAmp.value = shape.amp;
+                else gsap.to(uniforms.uAmp, { value: shape.amp, duration: 0.8 });
+            }
+        };
+
         const updateGeometry = () => {
             if (reduceMotion) {
-                model.geometry = shapes[currentIndex].geo;
-                uniforms.uAmp.value = shapes[currentIndex].amp;
+                applyShape();
                 renderer.render(scene, camera);
                 return;
             }
-            gsap.to(model.scale, {
+            gsap.to(stage.scale, {
                 x: 0,
                 y: 0,
                 z: 0,
                 duration: 0.3,
                 ease: "back.in(1.5)",
                 onComplete: () => {
-                    model.geometry = shapes[currentIndex].geo;
-                    gsap.to(uniforms.uAmp, {
-                        value: shapes[currentIndex].amp,
-                        duration: 0.8,
-                    });
-                    gsap.to(model.scale, {
+                    applyShape();
+                    gsap.to(stage.scale, {
                         x: 1,
                         y: 1,
                         z: 1,
@@ -311,6 +336,37 @@
                 (currentIndex - 1 + shapes.length) % shapes.length;
             updateGeometry();
         });
+
+        /**============================================
+         * MODELO GLB — bodegón de cerezas (carga diferida
+         * para no competir con el primer render)
+         *=============================================**/
+        setTimeout(() => {
+            import("three/addons/loaders/GLTFLoader.js")
+                .then(({ GLTFLoader }) =>
+                    new GLTFLoader().loadAsync("/models/cerezas.glb"),
+                )
+                .then((gltf) => {
+                    const obj = gltf.scene;
+                    // Fuera el plano de fondo pintado: taza y cerezas flotando
+                    const drop: any[] = [];
+                    obj.traverse((n) => {
+                        if (n.name === "Plane_Fondo_0") drop.push(n);
+                    });
+                    drop.forEach((n) => n.removeFromParent());
+
+                    const box = new THREE.Box3().setFromObject(obj);
+                    obj.position.sub(box.getCenter(new THREE.Vector3()));
+                    const size = box.getSize(new THREE.Vector3());
+                    const wrap = new THREE.Group();
+                    wrap.add(obj);
+                    wrap.scale.setScalar(7 / Math.max(size.x, size.y, size.z));
+                    wrap.visible = false;
+                    stage.add(wrap);
+                    shapes.push({ object: wrap });
+                })
+                .catch(() => {}); // sin el modelo, la escena sigue igual
+        }, 2500);
 
         const renderer = new THREE.WebGLRenderer({
             canvas: canvas,
@@ -363,8 +419,12 @@
                 targetRotationX += (mouseY * 2.5 - targetRotationX) * 0.05;
                 targetRotationY += (mouseX * 2.5 - targetRotationY) * 0.05;
 
+                // El modelo GLB gira solo en Y (tornamesa); los blobs dan tumbos
+                const isModel = !!shapes[currentIndex]?.object;
                 group.rotation.y = animTime * 0.15 + targetRotationY;
-                group.rotation.x = animTime * 0.1 + targetRotationX;
+                group.rotation.x = isModel
+                    ? targetRotationX * 0.4
+                    : animTime * 0.1 + targetRotationX;
 
                 group.position.y += Math.sin(animTime) * 0.002;
 
