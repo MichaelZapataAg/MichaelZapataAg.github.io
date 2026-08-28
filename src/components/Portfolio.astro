@@ -25,19 +25,44 @@ const seoTitle =
   lang === "es"
     ? "Michael Zapata | Creative Frontend Developer y Artista 3D"
     : "Michael Zapata | Creative Frontend Developer & 3D Artist";
-const personSchema = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: "Michael Zapata",
-  url: SITE,
-  image: ogImage,
-  jobTitle: "Creative Frontend Developer",
-  email: "michael.zapata.ag@gmail.com",
-  sameAs: [
-    "https://www.linkedin.com/in/michaelzapataag/",
-    "https://github.com/MichaelZapataAg",
-    "https://sketchfab.com/MichaelZapataAg",
-  ],
+const hardSkills = [
+  { n: "JavaScript", c: "hover:bg-neo-green hover:text-black" },
+  { n: "TypeScript", c: "hover:bg-neo-blue" },
+  { n: "React", c: "hover:bg-neo-blue" },
+  { n: "React Three Fiber", c: "hover:bg-neo-pink" },
+  { n: "Three.js", c: "hover:bg-neo-blue" },
+  { n: "GSAP", c: "hover:bg-neo-green hover:text-black" },
+  { n: "Astro", c: "hover:bg-neo-orange" },
+  { n: "Tailwind CSS", c: "hover:bg-neo-blue" },
+  { n: "HTML", c: "hover:bg-neo-orange" },
+  { n: "CSS", c: "hover:bg-neo-blue" },
+  { n: "Blender", c: "hover:bg-neo-orange" },
+  { n: "Maya", c: "hover:bg-neo-blue" },
+  { n: "Unity", c: "hover:bg-black" },
+  { n: "Aseprite", c: "hover:bg-neo-pink" },
+  { n: "Adobe Suite", c: "hover:bg-neo-pink" },
+  { n: "Git/GitHub", c: "hover:bg-gray-800" },
+  { n: "IAs generativas", c: "hover:bg-neo-pink" },
+];
+
+const softSkills = [
+  "Resolución de problemas",
+  "Creatividad",
+  "Trabajo en equipo",
+  "Adaptabilidad",
+  "Comunicación asertiva",
+  "Pensamiento lateral",
+];
+
+const links = {
+  dimensios: "https://michaelzapataag-dimensios.vercel.app/",
+  smog: "https://youtu.be/BPYK-eoCLBw",
+  amedias: "https://www.youtube.com/watch?v=gH6VYi887M4",
+  cherries:
+    "https://sketchfab.com/3d-models/still-life-cherries-blender-4cd3f3c0ef7246258cda85098131a4f6",
+  kash: "https://stake.com/casino/games/luckybastardsstudio-kash-smash",
+  dead: "https://stake.com/casino/games/luckybastardsstudio-dead-heat",
+  samsa: "https://samsa.studio/",
 };
 
 const t = {
@@ -186,6 +211,139 @@ const t = {
     es: "Póster de A Medias, animación interactiva en realidad virtual",
     en: "Poster of A Medias, an interactive virtual reality animation",
   },
+  open_project: { es: "Abrir proyecto:", en: "Open project:" },
+  nav_lang_label: { es: "Idioma y sonido", en: "Language and sound" },
+  nav_contact_label: { es: "Contacto y redes", en: "Contact and social links" },
+  about_title: { es: "Sobre mí", en: "About me" },
+  gameplay_label: {
+    es: "Gameplay grabado de",
+    en: "Recorded gameplay of",
+  },
+  reel_label: {
+    es: "Reel de animación de Michael Zapata",
+    en: "Michael Zapata's animation reel",
+  },
+};
+
+const stripHtml = (s: string) => s.replace(/<br\s*\/?>/g, " ").replace(/\s+/g, " ").trim();
+
+const projects = [
+  {
+    "@type": "WebApplication",
+    name: "Dimensios",
+    url: links.dimensios,
+    description: t.dimensios_desc[lang],
+    image: `${SITE}${dimensioImg.src}`,
+    genre: t.interactive_experience[lang],
+  },
+  {
+    "@type": "VideoGame",
+    name: stripHtml(t.smog_title[lang]),
+    url: links.smog,
+    description: t.smog_desc[lang],
+    image: `${SITE}${smogImg.src}`,
+    genre: t.platformer[lang],
+    gamePlatform: "PC",
+  },
+  {
+    "@type": "CreativeWork",
+    name: "A Medias",
+    url: links.amedias,
+    description: t.amedias_desc[lang],
+    image: `${SITE}${aMediasImg.src}`,
+    genre: t.vr_animation[lang],
+  },
+  {
+    "@type": "VideoObject",
+    name: t.animation_title[lang],
+    description: t.animation_desc[lang],
+    contentUrl: `${SITE}${demoReel}`,
+    thumbnailUrl: ogImage,
+    uploadDate: "2026-08-27",
+    genre: t.animation_tags[lang],
+  },
+  {
+    "@type": "3DModel",
+    name: stripHtml(t.cherries_title[lang]),
+    url: links.cherries,
+    description: t.cherries_desc[lang],
+    genre: t.cherries_tags[lang],
+  },
+  {
+    "@type": "VideoGame",
+    name: "Kash Smash: The Vault",
+    url: links.kash,
+    description: t.kash_desc[lang],
+    image: `${SITE}${kashSmashImg.src}`,
+    genre: t.slot_tag[lang],
+    gamePlatform: "Web",
+    publisher: { "@type": "Organization", name: "Lucky Bastards Studio" },
+    creator: { "@type": "Organization", name: "Samsa Studio", url: links.samsa },
+  },
+  {
+    "@type": "VideoGame",
+    name: "Dead Heat",
+    url: links.dead,
+    description: t.dead_desc[lang],
+    image: `${SITE}${deadHeatImg.src}`,
+    genre: t.slot_tag[lang],
+    gamePlatform: "Web",
+    publisher: { "@type": "Organization", name: "Lucky Bastards Studio" },
+    creator: { "@type": "Organization", name: "Samsa Studio", url: links.samsa },
+  },
+].map((p) => ({
+  ...p,
+  inLanguage: lang,
+  author: { "@id": `${SITE}/#person` },
+}));
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": `${SITE}/#person`,
+      name: "Michael Zapata",
+      url: SITE,
+      image: ogImage,
+      jobTitle: "Creative Frontend Developer",
+      description: t.seo_desc[lang],
+      email: "michael.zapata.ag@gmail.com",
+      knowsAbout: hardSkills.map((s) => s.n),
+      sameAs: [
+        "https://www.linkedin.com/in/michaelzapataag/",
+        "https://github.com/MichaelZapataAg",
+        "https://sketchfab.com/MichaelZapataAg",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE}/#website`,
+      url: pageUrl,
+      name: "Michael Zapata",
+      description: t.seo_desc[lang],
+      inLanguage: lang,
+      author: { "@id": `${SITE}/#person` },
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": `${pageUrl}#page`,
+      url: pageUrl,
+      name: seoTitle,
+      isPartOf: { "@id": `${SITE}/#website` },
+      mainEntity: { "@id": `${SITE}/#person` },
+      inLanguage: lang,
+      hasPart: {
+        "@type": "ItemList",
+        name: t.projects_title[lang],
+        itemListElement: projects.map((item, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          item,
+        })),
+      },
+    },
+  ],
 };
 ---
 
@@ -235,12 +393,13 @@ const t = {
 
     <script
       type="application/ld+json"
-      set:html={JSON.stringify(personSchema)}
+      set:html={JSON.stringify(schema)}
     />
   </head>
   <body class="bg-paper text-black">
     <!-- Language Switch -->
-    <div
+    <nav
+      aria-label={t.nav_lang_label[lang]}
       class="fixed top-6 right-6 lg:top-10 lg:right-10 z-[100] brutal-shadow border-4 border-black bg-white flex items-center"
     >
       <a
@@ -260,15 +419,14 @@ const t = {
         class="px-3 py-1 font-display font-black text-sm uppercase border-l-4 border-black hover:bg-neo-green transition-colors text-black cursor-pointer"
         >♪</button
       >
-    </div>
+    </nav>
 
-    <!-- 3D Canvas Background Removed, see Hero -->
-
-    <div class="noise-overlay"></div>
+    <div class="noise-overlay" aria-hidden="true"></div>
 
     <div
-      class="relative z-10 wrapper w-full min-h-screen overflow-hidden flex flex-col gap-32"
+      class="relative z-10 wrapper w-full min-h-screen overflow-clip flex flex-col gap-32"
     >
+      <main class="contents">
       <!-- Hero Header -->
       <header
         class="min-h-screen w-full flex flex-col justify-center items-start px-6 sm:px-12 md:px-20 lg:px-32 pt-24"
@@ -309,10 +467,11 @@ const t = {
           <div
             class="brutal-box bg-black text-white px-4 py-2 md:px-6 md:py-3 inline-block rotate-1 brutal-shadow init-animate"
           >
-            <span
-              class="font-display font-black text-base sm:text-xl md:text-2xl uppercase tracking-tight"
-              >{t.job[lang]}</span
+            <p
+              class="font-display font-black text-base sm:text-xl md:text-2xl uppercase tracking-tight m-0"
             >
+              {t.job[lang]}
+            </p>
           </div>
           <!-- 3D Canvas Box: vitrina a todo el ancho -->
           <div
@@ -325,7 +484,8 @@ const t = {
 
       <!-- Marquee divider -->
       <div
-        class="marquee-container -rotate-2 z-20 brutal-shadow relative w-full overflow-hidden"
+        aria-hidden="true"
+        class="marquee-container -rotate-2 z-20 brutal-shadow relative w-full overflow-clip"
       >
         <div class="marquee-content text-black flex items-center">
           <span
@@ -340,9 +500,11 @@ const t = {
       <!-- Playground Section -->
       <section
         id="proyectos"
+        aria-labelledby="proyectos-title"
         class="py-20 md:py-32 px-6 sm:px-12 md:px-20 lg:px-32 border-t-8 border-black"
       >
         <h2
+          id="proyectos-title"
           class="text-[12vw] sm:text-[10vw] md:text-8xl font-black mb-20 text-center text-outline leading-tight"
         >
           {t.projects_title[lang]}
@@ -351,18 +513,20 @@ const t = {
           class="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-12 w-full mx-auto"
         >
           <!-- Card 1 (Dimensios) -->
-          <a
-            href="https://michaelzapataag-dimensios.vercel.app/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="block group relative cursor-crosshair lg:col-span-2"
-          >
+          <article class="group relative cursor-crosshair lg:col-span-2">
+            <a
+              href={links.dimensios}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-hidden="true"
+              tabindex="-1"
+              class="absolute inset-0 z-30 cursor-crosshair"></a>
             <div
               class="absolute inset-0 bg-neo-blue border-4 border-black translate-x-4 translate-y-4 transition-transform group-hover:translate-x-8 group-hover:translate-y-8"
             >
             </div>
             <div
-              class="relative bg-white border-4 border-black p-6 sm:p-8 flex flex-col md:flex-row lg:flex-row gap-8 transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2 overflow-hidden min-h-[400px]"
+              class="relative bg-white border-4 border-black p-6 sm:p-8 flex flex-col md:flex-row lg:flex-row gap-8 transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2 overflow-clip min-h-[400px]"
             >
               <div
                 class="absolute -right-16 -top-16 w-56 h-56 bg-neo-green rounded-full opacity-60 blur-xl group-hover:blur-3xl transition-all duration-500 group-hover:scale-150"
@@ -371,7 +535,7 @@ const t = {
 
               <!-- Mockup Image Slot -->
               <div
-                class="w-full md:w-1/2 lg:w-1/2 aspect-video self-center border-4 border-black bg-white flex items-center justify-center relative z-10 overflow-hidden group"
+                class="w-full md:w-1/2 lg:w-1/2 aspect-video self-center border-4 border-black bg-white flex items-center justify-center relative z-10 overflow-clip group"
               >
                 <Image
                   src={dimensioImg}
@@ -387,13 +551,19 @@ const t = {
                   class="flex justify-between items-start z-10 relative mb-4"
                 >
                   <h3 class="text-3xl sm:text-4xl lg:text-5xl font-black">
-                    DIMENSIOS
+                    <a
+                      href={links.dimensios}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="focus-visible:outline-4 focus-visible:outline-neo-blue"
+                      >DIMENSIOS</a
+                    >
                   </h3>
                   <svg
                     viewBox="0 0 16 16"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    class="hidden md:block w-8 h-8 lg:w-12 lg:h-12 fill-current text-black"
+                    aria-hidden="true" class="hidden md:block w-8 h-8 lg:w-12 lg:h-12 fill-current text-black"
                   >
                     <path
                       d="M14 2H5.50003L4.00003 3.5L6.83581 6.33579L0.585815 12.5858L3.41424 15.4142L9.66424 9.16421L12.5 12L14 10.5L14 2Z"
@@ -418,21 +588,25 @@ const t = {
                 </div>
               </div>
             </div>
-          </a>
+          </article>
 
           <!-- Card 2 (Smog) -->
-          <a
-            href="https://youtu.be/BPYK-eoCLBw"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="block group relative cursor-crosshair sound-hover lg:row-span-2"
+          <article
+            class="group relative cursor-crosshair sound-hover lg:row-span-2"
           >
+            <a
+              href={links.smog}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-hidden="true"
+              tabindex="-1"
+              class="absolute inset-0 z-30 cursor-crosshair"></a>
             <div
               class="absolute inset-0 bg-neo-pink border-4 border-black translate-x-4 translate-y-4 transition-transform group-hover:translate-x-8 group-hover:translate-y-8"
             >
             </div>
             <div
-              class="relative bg-white border-4 border-black p-6 sm:p-8 flex flex-col md:flex-row lg:flex-col xl:flex-row gap-8 transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2 overflow-hidden h-full min-h-[400px]"
+              class="relative bg-white border-4 border-black p-6 sm:p-8 flex flex-col md:flex-row lg:flex-col xl:flex-row gap-8 transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2 overflow-clip h-full min-h-[400px]"
             >
               <div
                 class="absolute -left-16 -bottom-16 w-56 h-56 bg-neo-orange rounded-none rotate-45 opacity-60 blur-xl group-hover:blur-3xl transition-all duration-500 group-hover:scale-150"
@@ -441,7 +615,7 @@ const t = {
 
               <!-- Mockup Image Slot -->
               <div
-                class="w-full md:w-1/2 lg:w-full xl:w-1/2 aspect-[6600/10200] self-center border-4 border-black bg-white flex items-center justify-center relative z-10 overflow-hidden group"
+                class="w-full md:w-1/2 lg:w-full xl:w-1/2 aspect-[6600/10200] self-center border-4 border-black bg-white flex items-center justify-center relative z-10 overflow-clip group"
               >
                 <Image
                   src={smogImg}
@@ -458,15 +632,20 @@ const t = {
                 <div
                   class="flex justify-between items-start z-10 relative mb-4"
                 >
-                  <h3
-                    class="text-3xl sm:text-4xl font-black leading-tight"
-                    set:html={t.smog_title[lang]}
-                  />
+                  <h3 class="text-3xl sm:text-4xl font-black leading-tight">
+                    <a
+                      href={links.smog}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="focus-visible:outline-4 focus-visible:outline-neo-pink"
+                      set:html={t.smog_title[lang]}
+                    />
+                  </h3>
                   <svg
                     viewBox="0 0 16 16"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    class="hidden md:block w-8 h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12 fill-current text-black shrink-0"
+                    aria-hidden="true" class="hidden md:block w-8 h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12 fill-current text-black shrink-0"
                   >
                     <path
                       d="M14 2H5.50003L4.00003 3.5L6.83581 6.33579L0.585815 12.5858L3.41424 15.4142L9.66424 9.16421L12.5 12L14 10.5L14 2Z"
@@ -489,25 +668,29 @@ const t = {
                 </div>
               </div>
             </div>
-          </a>
+          </article>
 
           <!-- Card 3 (A Medias) -->
-          <a
-            href="https://www.youtube.com/watch?v=gH6VYi887M4"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="block group relative cursor-crosshair sound-hover lg:row-span-2"
+          <article
+            class="group relative cursor-crosshair sound-hover lg:row-span-2"
           >
+            <a
+              href={links.amedias}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-hidden="true"
+              tabindex="-1"
+              class="absolute inset-0 z-30 cursor-crosshair"></a>
             <div
               class="absolute inset-0 bg-neo-green border-4 border-black translate-x-4 translate-y-4 transition-transform group-hover:translate-x-8 group-hover:translate-y-8"
             >
             </div>
             <div
-              class="relative bg-white border-4 border-black p-6 sm:p-8 flex flex-col md:flex-row lg:flex-col xl:flex-row gap-8 transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2 overflow-hidden h-full min-h-[400px]"
+              class="relative bg-white border-4 border-black p-6 sm:p-8 flex flex-col md:flex-row lg:flex-col xl:flex-row gap-8 transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2 overflow-clip h-full min-h-[400px]"
             >
               <!-- Mockup Image Slot -->
               <div
-                class="w-full md:w-1/2 lg:w-full xl:w-1/2 aspect-[1131/1600] self-center border-4 border-black bg-gray-200 flex items-center justify-center relative z-10 overflow-hidden group"
+                class="w-full md:w-1/2 lg:w-full xl:w-1/2 aspect-[1131/1600] self-center border-4 border-black bg-gray-200 flex items-center justify-center relative z-10 overflow-clip group"
               >
                 <Image
                   src={aMediasImg}
@@ -523,13 +706,19 @@ const t = {
                   class="flex justify-between items-start z-10 relative mb-4"
                 >
                   <h3 class="text-3xl sm:text-4xl font-black leading-tight">
-                    A MEDIAS
+                    <a
+                      href={links.amedias}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="focus-visible:outline-4 focus-visible:outline-neo-green"
+                      >A MEDIAS</a
+                    >
                   </h3>
                   <svg
                     viewBox="0 0 16 16"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    class="hidden md:block w-8 h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12 fill-current text-black shrink-0"
+                    aria-hidden="true" class="hidden md:block w-8 h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12 fill-current text-black shrink-0"
                   >
                     <path
                       d="M14 2H5.50003L4.00003 3.5L6.83581 6.33579L0.585815 12.5858L3.41424 15.4142L9.66424 9.16421L12.5 12L14 10.5L14 2Z"
@@ -552,10 +741,10 @@ const t = {
                 </div>
               </div>
             </div>
-          </a>
+          </article>
 
           <!-- Card 4 (Animaciones) -->
-          <div
+          <article
             class="group relative cursor-crosshair sound-hover lg:col-span-2"
           >
             <div
@@ -563,14 +752,15 @@ const t = {
             >
             </div>
             <div
-              class="relative bg-white border-4 border-black p-6 sm:p-8 flex flex-col md:flex-row gap-8 transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2 overflow-hidden min-h-[300px]"
+              class="relative bg-white border-4 border-black p-6 sm:p-8 flex flex-col md:flex-row gap-8 transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2 overflow-clip min-h-[300px]"
             >
               <!-- Mockup Image Slot -->
               <div
-                class="w-full md:w-1/2 aspect-square min-h-[250px] border-4 border-black bg-black flex items-center justify-center relative z-10 overflow-hidden group"
+                class="w-full md:w-1/2 aspect-square min-h-[250px] border-4 border-black bg-black flex items-center justify-center relative z-10 overflow-clip group"
               >
                 <video
                   src={demoReel}
+                  aria-label={t.reel_label[lang]}
                   autoplay
                   loop
                   muted
@@ -596,20 +786,20 @@ const t = {
                 </div>
               </div>
             </div>
-          </div>
+          </article>
 
           <!-- Card 5 (Still Life Cherries — embed de Sketchfab) -->
-          <div class="group relative cursor-crosshair lg:col-span-2">
+          <article class="group relative cursor-crosshair lg:col-span-2">
             <div
               class="absolute inset-0 bg-neo-orange border-4 border-black translate-x-4 translate-y-4 transition-transform group-hover:translate-x-8 group-hover:translate-y-8"
             >
             </div>
             <div
-              class="relative bg-white border-4 border-black p-6 sm:p-8 flex flex-col md:flex-row gap-8 transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2 overflow-hidden min-h-[400px]"
+              class="relative bg-white border-4 border-black p-6 sm:p-8 flex flex-col md:flex-row gap-8 transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2 overflow-clip min-h-[400px]"
             >
               <!-- Visor de Sketchfab -->
               <div
-                class="w-full md:w-1/2 aspect-video self-center border-4 border-black bg-black relative z-10 overflow-hidden"
+                class="w-full md:w-1/2 aspect-video self-center border-4 border-black bg-black relative z-10 overflow-clip"
               >
                 <iframe
                   title={t.cherries_iframe_title[lang]}
@@ -640,7 +830,7 @@ const t = {
                     >{t.cherries_tags[lang]}</span
                   >
                   <a
-                    href="https://sketchfab.com/3d-models/still-life-cherries-blender-4cd3f3c0ef7246258cda85098131a4f6"
+                    href={links.cherries}
                     target="_blank"
                     rel="noopener noreferrer"
                     class="font-body text-xl md:text-2xl font-bold block hover:text-neo-orange transition-colors sound-hover"
@@ -649,20 +839,22 @@ const t = {
                 </div>
               </div>
             </div>
-          </div>
+          </article>
 
           <!-- Card 6 (Kash Smash) -->
-          <div class="group relative cursor-crosshair sound-hover lg:col-span-2">
+          <article
+            class="group relative cursor-crosshair sound-hover lg:col-span-2"
+          >
             <div
               class="absolute inset-0 bg-[#A34FD8] border-4 border-black translate-x-4 translate-y-4 transition-transform group-hover:translate-x-8 group-hover:translate-y-8"
             >
             </div>
             <div
-              class="relative bg-white border-4 border-black p-6 sm:p-8 flex flex-col md:flex-row gap-8 transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2 overflow-hidden"
+              class="relative bg-white border-4 border-black p-6 sm:p-8 flex flex-col md:flex-row gap-8 transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2 overflow-clip"
             >
               <!-- Portada oficial -->
               <div
-                class="w-full sm:w-2/3 sm:mx-auto md:w-1/3 md:mx-0 aspect-[1006/1348] self-center border-4 border-black bg-white relative z-10 overflow-hidden group shrink-0"
+                class="w-full sm:w-2/3 sm:mx-auto md:w-1/3 md:mx-0 aspect-[1006/1348] self-center border-4 border-black bg-white relative z-10 overflow-clip group shrink-0"
               >
                 <Image
                   src={kashSmashImg}
@@ -679,7 +871,7 @@ const t = {
                     viewBox="0 0 16 16"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    class="hidden md:block w-8 h-8 lg:w-10 lg:h-10 fill-current text-black shrink-0"
+                    aria-hidden="true" class="hidden md:block w-8 h-8 lg:w-10 lg:h-10 fill-current text-black shrink-0"
                   >
                     <path
                       d="M14 2H5.50003L4.00003 3.5L6.83581 6.33579L0.585815 12.5858L3.41424 15.4142L9.66424 9.16421L12.5 12L14 10.5L14 2Z"
@@ -688,11 +880,12 @@ const t = {
                 </div>
                 <!-- Gameplay real grabado en local -->
                 <div
-                  class="w-full aspect-video border-4 border-black bg-black relative z-10 overflow-hidden mb-6"
+                  class="w-full aspect-video border-4 border-black bg-black relative z-10 overflow-clip mb-6"
                 >
                   <video
                     src={kashGameplay}
                     poster={kashSmashImg.src}
+                    aria-label={`${t.gameplay_label[lang]} Kash Smash: The Vault`}
                     autoplay
                     loop
                     muted
@@ -708,16 +901,18 @@ const t = {
                     >{t.slot_tag[lang]}</span
                   >
                   <a
-                    href="https://stake.com/casino/games/luckybastardsstudio-kash-smash"
+                    href={links.kash}
                     target="_blank"
                     rel="noopener noreferrer"
                     class="font-body text-xl md:text-2xl font-bold block hover:text-[#A34FD8] transition-colors sound-hover"
                     >{t.play_stake[lang]} →</a
                   >
+                </div>
+                <div class="z-10 relative">
                   <p class="font-body text-xs md:text-sm font-medium mt-2 opacity-70">
                     {lang === "es" ? "Hecho en" : "Made at"}{" "}
                     <a
-                      href="https://samsa.studio/"
+                      href={links.samsa}
                       target="_blank"
                       rel="noopener noreferrer"
                       class="underline font-bold hover:text-neo-pink transition-colors sound-hover"
@@ -730,20 +925,22 @@ const t = {
                 </div>
               </div>
             </div>
-          </div>
+          </article>
 
           <!-- Card 7 (Dead Heat) -->
-          <div class="group relative cursor-crosshair sound-hover lg:col-span-2">
+          <article
+            class="group relative cursor-crosshair sound-hover lg:col-span-2"
+          >
             <div
               class="absolute inset-0 bg-[#F24D28] border-4 border-black translate-x-4 translate-y-4 transition-transform group-hover:translate-x-8 group-hover:translate-y-8"
             >
             </div>
             <div
-              class="relative bg-white border-4 border-black p-6 sm:p-8 flex flex-col md:flex-row gap-8 transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2 overflow-hidden"
+              class="relative bg-white border-4 border-black p-6 sm:p-8 flex flex-col md:flex-row gap-8 transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2 overflow-clip"
             >
               <!-- Portada oficial -->
               <div
-                class="w-full sm:w-2/3 sm:mx-auto md:w-1/3 md:mx-0 aspect-[818/1094] self-center border-4 border-black bg-white relative z-10 overflow-hidden group shrink-0"
+                class="w-full sm:w-2/3 sm:mx-auto md:w-1/3 md:mx-0 aspect-[818/1094] self-center border-4 border-black bg-white relative z-10 overflow-clip group shrink-0"
               >
                 <Image
                   src={deadHeatImg}
@@ -760,7 +957,7 @@ const t = {
                     viewBox="0 0 16 16"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    class="hidden md:block w-8 h-8 lg:w-10 lg:h-10 fill-current text-black shrink-0"
+                    aria-hidden="true" class="hidden md:block w-8 h-8 lg:w-10 lg:h-10 fill-current text-black shrink-0"
                   >
                     <path
                       d="M14 2H5.50003L4.00003 3.5L6.83581 6.33579L0.585815 12.5858L3.41424 15.4142L9.66424 9.16421L12.5 12L14 10.5L14 2Z"
@@ -769,11 +966,12 @@ const t = {
                 </div>
                 <!-- Gameplay real grabado en local -->
                 <div
-                  class="w-full aspect-video border-4 border-black bg-black relative z-10 overflow-hidden mb-6"
+                  class="w-full aspect-video border-4 border-black bg-black relative z-10 overflow-clip mb-6"
                 >
                   <video
                     src={deadHeatGameplay}
                     poster={deadHeatImg.src}
+                    aria-label={`${t.gameplay_label[lang]} Dead Heat`}
                     autoplay
                     loop
                     muted
@@ -789,16 +987,18 @@ const t = {
                     >{t.slot_tag[lang]}</span
                   >
                   <a
-                    href="https://stake.com/casino/games/luckybastardsstudio-dead-heat"
+                    href={links.dead}
                     target="_blank"
                     rel="noopener noreferrer"
                     class="font-body text-xl md:text-2xl font-bold block hover:text-[#F24D28] transition-colors sound-hover"
                     >{t.play_stake[lang]} →</a
                   >
+                </div>
+                <div class="z-10 relative">
                   <p class="font-body text-xs md:text-sm font-medium mt-2 opacity-70">
                     {lang === "es" ? "Hecho en" : "Made at"}{" "}
                     <a
-                      href="https://samsa.studio/"
+                      href={links.samsa}
                       target="_blank"
                       rel="noopener noreferrer"
                       class="underline font-bold hover:text-neo-pink transition-colors sound-hover"
@@ -811,13 +1011,14 @@ const t = {
                 </div>
               </div>
             </div>
-          </div>
+          </article>
         </div>
       </section>
 
       <!-- Second Marquee divider -->
       <div
-        class="marquee-container rotate-2 z-20 brutal-shadow relative w-full overflow-hidden"
+        aria-hidden="true"
+        class="marquee-container rotate-2 z-20 brutal-shadow relative w-full overflow-clip"
       >
         <div class="marquee-content text-black flex items-center">
           <span
@@ -831,68 +1032,46 @@ const t = {
 
       <!-- Arsenal Section -->
       <section
+        id="arsenal"
+        aria-labelledby="arsenal-title"
         class="py-16 md:py-24 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-12 items-start border-t-8 border-black pt-20 px-6 sm:px-12 md:px-20 lg:px-32"
       >
-        <div class="w-full relative z-10 overflow-hidden lg:overflow-visible">
+        <div class="w-full relative z-10 overflow-clip lg:overflow-visible">
           <h2
+            id="arsenal-title"
             class="text-[12vw] sm:text-5xl md:text-6xl font-black mb-8 leading-none max-w-full break-words"
             set:html={t.arsenal[lang]}
           />
-          <div class="flex flex-wrap gap-2 sm:gap-3 mb-16">
+          <ul class="list-none m-0 p-0 flex flex-wrap gap-2 sm:gap-3 mb-16">
             {
-              [
-                { n: "JavaScript", c: "hover:bg-neo-green hover:text-black" },
-                { n: "TypeScript", c: "hover:bg-neo-blue" },
-                { n: "React", c: "hover:bg-neo-blue" },
-                { n: "React Three Fiber", c: "hover:bg-neo-pink" },
-                { n: "Three.js", c: "hover:bg-neo-blue" },
-                { n: "GSAP", c: "hover:bg-neo-green hover:text-black" },
-                { n: "Astro", c: "hover:bg-neo-orange" },
-                { n: "Tailwind CSS", c: "hover:bg-neo-blue" },
-                { n: "HTML", c: "hover:bg-neo-orange" },
-                { n: "CSS", c: "hover:bg-neo-blue" },
-                { n: "Blender", c: "hover:bg-neo-orange" },
-                { n: "Maya", c: "hover:bg-neo-blue" },
-                { n: "Unity", c: "hover:bg-black" },
-                { n: "Aseprite", c: "hover:bg-neo-pink" },
-                { n: "Adobe Suite", c: "hover:bg-neo-pink" },
-                { n: "Git/GitHub", c: "hover:bg-gray-800" },
-                { n: "IAs generativas", c: "hover:bg-neo-pink" },
-              ].map((skill) => (
-                <span
+              hardSkills.map((skill) => (
+                <li
                   class={`px-3 py-2 sm:px-5 sm:py-3 border-4 border-black bg-white font-display font-black text-xs sm:text-sm md:text-base uppercase brutal-shadow ${skill.c} hover:text-white transition-colors cursor-crosshair sound-hover`}
                 >
                   {lang === "es"
                     ? skill.n
                     : t.skills[skill.n as keyof typeof t.skills] || skill.n}
-                </span>
+                </li>
               ))
             }
-          </div>
+          </ul>
 
           <h3 class="text-3xl sm:text-4xl font-black mb-6 uppercase">
             {t.soft_skills_title[lang]}
           </h3>
-          <div class="flex flex-wrap gap-2 sm:gap-3">
+          <ul class="list-none m-0 p-0 flex flex-wrap gap-2 sm:gap-3">
             {
-              [
-                "Resolución de problemas",
-                "Creatividad",
-                "Trabajo en equipo",
-                "Adaptabilidad",
-                "Comunicación asertiva",
-                "Pensamiento lateral",
-              ].map((skill) => (
-                <span
+              softSkills.map((skill) => (
+                <li
                   class={`px-3 py-2 sm:px-4 sm:py-2 border-4 border-black bg-neo-green font-display font-black text-xs sm:text-sm uppercase brutal-shadow hover:bg-black hover:text-white transition-colors cursor-crosshair sound-hover`}
                 >
                   {lang === "es"
                     ? skill
                     : t.skills[skill as keyof typeof t.skills] || skill}
-                </span>
+                </li>
               ))
             }
-          </div>
+          </ul>
         </div>
 
         <div
@@ -900,10 +1079,12 @@ const t = {
         >
           <!-- Quién soy (antes vivía en el hero; el portafolio ahora va primero) -->
           <div
+            id="sobre-mi"
             class="brutal-box bg-neo-pink text-white w-full max-w-xl p-6 md:p-10 brutal-shadow -rotate-1 transform-gpu z-10 relative"
           >
+            <h3 class="sr-only">{t.about_title[lang]}</h3>
             <div
-              class="absolute -top-12 -left-8 md:-top-16 md:-left-10 w-24 h-24 sm:w-32 sm:h-32 border-4 border-black bg-white brutal-shadow -rotate-6 overflow-hidden flex items-center justify-center z-20"
+              class="absolute -top-12 -left-8 md:-top-16 md:-left-10 w-24 h-24 sm:w-32 sm:h-32 border-4 border-black bg-white brutal-shadow -rotate-6 overflow-clip flex items-center justify-center z-20"
             >
               <Image
                 src={maikImg}
@@ -943,6 +1124,7 @@ const t = {
           </div>
         </div>
       </section>
+      </main>
 
       <!-- Footer -->
       <footer
@@ -995,7 +1177,10 @@ const t = {
           </h2>
         </div>
 
-        <div class="flex flex-wrap justify-center gap-4 md:gap-8 mb-20 px-4">
+        <nav
+          aria-label={t.nav_contact_label[lang]}
+          class="flex flex-wrap justify-center gap-4 md:gap-8 mb-20 px-4"
+        >
           <a
             href="mailto:michael.zapata.ag@gmail.com"
             target="_blank"
@@ -1037,7 +1222,7 @@ const t = {
             class="px-5 py-3 border-4 border-black bg-neo-green font-display font-black text-sm md:text-lg uppercase brutal-shadow hover:bg-black hover:text-white transition-colors cursor-crosshair"
             >{t.cv_btn[lang]} ↓</a
           >
-        </div>
+        </nav>
 
         <p class="font-body font-bold text-xl uppercase tracking-wider">
           © {new Date().getFullYear()} Michael Zapata - {t.made_with[lang]}
