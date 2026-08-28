@@ -348,19 +348,16 @@
                 )
                 .then((gltf) => {
                     const obj = gltf.scene;
-                    // Fuera el plano de fondo pintado: taza y cerezas flotando
-                    const drop: any[] = [];
-                    obj.traverse((n) => {
-                        if (n.name === "Plane_Fondo_0") drop.push(n);
-                    });
-                    drop.forEach((n) => n.removeFromParent());
-
+                    // Se conserva el fondo pintado: se presenta como diorama,
+                    // igual que en Sketchfab
                     const box = new THREE.Box3().setFromObject(obj);
                     obj.position.sub(box.getCenter(new THREE.Vector3()));
                     const size = box.getSize(new THREE.Vector3());
                     const wrap = new THREE.Group();
                     wrap.add(obj);
-                    wrap.scale.setScalar(7 / Math.max(size.x, size.y, size.z));
+                    wrap.scale.setScalar(8.5 / Math.max(size.x, size.y, size.z));
+                    wrap.rotation.y = 0.35; // tres cuartos, como el preview de Sketchfab
+                    wrap.rotation.x = 0.3; // inclina el diorama hacia la cámara
                     wrap.visible = false;
                     stage.add(wrap);
                     shapes.push({ object: wrap });
@@ -419,12 +416,17 @@
                 targetRotationX += (mouseY * 2.5 - targetRotationX) * 0.05;
                 targetRotationY += (mouseX * 2.5 - targetRotationY) * 0.05;
 
-                // El modelo GLB gira solo en Y (tornamesa); los blobs dan tumbos
+                // El diorama GLB no gira 360° (se vería el fondo hueco por
+                // detrás): vaivén suave de vitrina + parallax del mouse
                 const isModel = !!shapes[currentIndex]?.object;
-                group.rotation.y = animTime * 0.15 + targetRotationY;
-                group.rotation.x = isModel
-                    ? targetRotationX * 0.4
-                    : animTime * 0.1 + targetRotationX;
+                if (isModel) {
+                    group.rotation.y =
+                        Math.sin(animTime * 0.4) * 0.18 + targetRotationY * 0.35;
+                    group.rotation.x = targetRotationX * 0.25;
+                } else {
+                    group.rotation.y = animTime * 0.15 + targetRotationY;
+                    group.rotation.x = animTime * 0.1 + targetRotationX;
+                }
 
                 group.position.y += Math.sin(animTime) * 0.002;
 
